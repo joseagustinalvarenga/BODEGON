@@ -1,0 +1,52 @@
+databases:
+  - name: bodegon-db
+    databaseName: bodegon
+    user: bodegon
+    plan: free
+
+services:
+  # ── Backend (Spring Boot) ──────────────────────────────────────────
+  - type: web
+    name: bodegon-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_HOST
+        fromDatabase:
+          name: bodegon-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: bodegon-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: bodegon-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: bodegon-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: bodegon-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+
+  # ── Frontend (Next.js) ────────────────────────────────────────────
+  - type: web
+    name: bodegon-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    plan: free
+    envVars:
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: bodegon-backend
+          property: hostport
