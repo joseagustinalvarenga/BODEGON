@@ -43,6 +43,7 @@ services:
     name: bodegon-frontend
     env: docker
     dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
     plan: free
     envVars:
       - key: BACKEND_URL
