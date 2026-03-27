@@ -50,4 +50,4 @@ services:
         fromService:
           type: web
           name: bodegon-backend
-          property: hostport
+          property: url
