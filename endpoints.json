@@ -1,0 +1,67 @@
+{
+  "auth": {
+    "register": {
+      "method": "POST",
+      "url": "/api/auth/register",
+      "body": {
+        "fullName": "Juan Perez",
+        "email": "juan@example.com",
+        "password": "SecurePassword123!",
+        "phone": "1122334455"
+      }
+    },
+    "login": {
+      "method": "POST",
+      "url": "/api/auth/login",
+      "body": {
+        "email": "juan@example.com",
+        "password": "SecurePassword123!"
+      }
+    }
+  },
+  "promotions": {
+    "create": {
+      "method": "POST",
+      "url": "/api/promotions",
+      "headers": { "Authorization": "Bearer <admin_token>" },
+      "body": {
+        "title": "2x1 en Pintas",
+        "description": "Todos los Jueves",
+        "type": "PUBLIC",
+        "startAt": "2024-06-01T18:00:00",
+        "endAt": "2024-12-31T23:59:59",
+        "imageUrl": "http://img/bucket/pintas.jpg"
+      }
+    }
+  },
+  "rewards": {
+    "create": {
+      "method": "POST",
+      "url": "/api/rewards",
+      "headers": { "Authorization": "Bearer <admin_token>" },
+      "body": {
+        "name": "Hamburguesa Completa",
+        "description": "Con papas fritas",
+        "pointsCost": 1500,
+        "stock": 50,
+        "validFrom": "2024-01-01T00:00:00",
+        "validTo": "2024-12-31T00:00:00"
+      }
+    }
+  },
+  "redemptions": {
+    "redeem": {
+      "method": "POST",
+      "url": "/api/redemptions",
+      "headers": { "Authorization": "Bearer <member_token>" },
+      "body": {
+        "rewardId": "UUID-DEL-REWARD"
+      }
+    },
+    "validate": {
+      "method": "POST",
+      "url": "/api/redemptions/BDG-123456/validate",
+      "headers": { "Authorization": "Bearer <admin_token>" }
+    }
+  }
+}

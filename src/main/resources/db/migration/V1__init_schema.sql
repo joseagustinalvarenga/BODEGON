@@ -1,0 +1,107 @@
+-- Enable UUID extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- USERS
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(50) UNIQUE,
+    password_hash VARCHAR(255),
+    role VARCHAR(20) NOT NULL, -- MEMBER, ADMIN
+    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE', -- ACTIVE, BLOCKED
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+
+-- MEMBER PROFILES
+CREATE TABLE member_profiles (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL UNIQUE REFERENCES users(id),
+    birth_date DATE,
+    level VARCHAR(20) NOT NULL DEFAULT 'BRONZE', -- BRONZE, SILVER, GOLD
+    current_points INTEGER DEFAULT 0,
+    lifetime_points INTEGER DEFAULT 0,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+
+-- PROMOTIONS
+CREATE TABLE promotions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    type VARCHAR(20) NOT NULL, -- PUBLIC, MEMBERS_ONLY
+    start_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    end_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    status VARCHAR(20) NOT NULL, -- DRAFT, PUBLISHED, EXPIRED
+    image_url VARCHAR(500),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+
+-- REWARDS
+CREATE TABLE rewards (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    points_cost INTEGER NOT NULL,
+    stock INTEGER, -- NULL = unlimited
+    active BOOLEAN DEFAULT TRUE,
+    valid_from TIMESTAMP WITHOUT TIME ZONE,
+    valid_to TIMESTAMP WITHOUT TIME ZONE,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+
+-- POINTS TRANSACTIONS
+CREATE TABLE points_transactions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    member_id UUID NOT NULL REFERENCES member_profiles(id),
+    type VARCHAR(20) NOT NULL, -- EARN, REDEEM, ADJUST
+    source VARCHAR(50) NOT NULL, -- PURCHASE, VISIT, BIRTHDAY, REFERRAL, ADMIN_ADJUST, REWARD_REDEEM
+    amount INTEGER NOT NULL,
+    description VARCHAR(255),
+    processed_by UUID REFERENCES users(id),
+    happened_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+
+-- REDEMPTIONS
+CREATE TABLE redemptions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    member_id UUID NOT NULL REFERENCES member_profiles(id),
+    reward_id UUID NOT NULL REFERENCES rewards(id),
+    points_spent INTEGER NOT NULL,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    status VARCHAR(20) NOT NULL, -- ISSUED, REDEEMED, CANCELLED, EXPIRED
+    issued_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    expires_at TIMESTAMP WITHOUT TIME ZONE,
+    redeemed_at TIMESTAMP WITHOUT TIME ZONE,
+    redeemed_by UUID REFERENCES users(id),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+
+-- VISITS
+CREATE TABLE visits (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    member_id UUID NOT NULL REFERENCES member_profiles(id),
+    visited_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    registered_by UUID REFERENCES users(id),
+    comments VARCHAR(255),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+
+-- REFRESH TOKENS
+CREATE TABLE refresh_tokens (
+    id BIGSERIAL PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users(id),
+    token TEXT NOT NULL UNIQUE,
+    expires_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    revoked BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);

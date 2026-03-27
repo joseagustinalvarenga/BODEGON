@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casos de Uso — Club el Bodegón</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: #faf8f4;
+            color: #2c2318;
+            line-height: 1.7;
+        }
+
+        .cover {
+            background: #1a1208;
+            color: #ede0c8;
+            padding: 80px 60px;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 4px solid #c9a84c;
+        }
+
+        .cover-label {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #c9a84c;
+            margin-bottom: 16px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .cover h1 {
+            font-size: 38px;
+            font-weight: normal;
+            color: #ede0c8;
+            margin-bottom: 10px;
+        }
+
+        .cover-sub {
+            font-size: 16px;
+            color: #9c8c74;
+            font-style: italic;
+        }
+
+        .cover-meta {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #5c5044;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 50px 40px 80px;
+        }
+
+        /* Actors */
+        .actors-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .actor-card {
+            border: 1px solid #ddd0b8;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fff;
+            border-top: 3px solid #c9a84c;
+        }
+
+        .actor-card .actor-name {
+            font-size: 14px;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+            color: #1a1208;
+            margin-bottom: 6px;
+        }
+
+        .actor-card p {
+            font-size: 13px;
+            color: #5c5044;
+            line-height: 1.5;
+        }
+
+        /* Modules */
+        .module {
+            margin: 50px 0 30px;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e8dfc8;
+        }
+
+        .module-number {
+            background: #1a1208;
+            color: #c9a84c;
+            font-size: 12px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .module-header h2 {
+            font-size: 22px;
+            font-weight: normal;
+            color: #1a1208;
+        }
+
+        /* Use cases */
+        .uc {
+            background: #fff;
+            border: 1px solid #ddd0b8;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            overflow: hidden;
+        }
+
+        .uc-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: #f5f0e8;
+            border-bottom: 1px solid #ddd0b8;
+        }
+
+        .uc-id {
+            font-size: 11px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            color: #c9a84c;
+            background: #1a1208;
+            padding: 2px 9px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        .uc-title {
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+            color: #1a1208;
+        }
+
+        .uc-body {
+            padding: 18px 20px;
+        }
+
+        .uc-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .uc-label {
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            color: #6b5c48;
+            min-width: 130px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding-top: 1px;
+        }
+
+        .uc-value {
+            color: #2c2318;
+            flex: 1;
+        }
+
+        .uc-value ol {
+            margin-left: 18px;
+        }
+
+        .uc-value li {
+            margin-bottom: 4px;
+        }
+
+        .alt-flow {
+            background: #fef9ec;
+            border-left: 3px solid #c9a84c;
+            border-radius: 4px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #5c4a2a;
+            margin-top: 10px;
+        }
+
+        .alt-flow strong {
+            font-family: 'Arial', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 12px 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        thead tr {
+            background: #1a1208;
+            color: #ede0c8;
+        }
+
+        thead th {
+            padding: 9px 14px;
+            text-align: left;
+            font-weight: normal;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f5f0e8;
+        }
+
+        tbody tr:hover {
+            background: #ede5d4;
+        }
+
+        tbody td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e8dfc8;
+            color: #2c2318;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+        }
+
+        .badge-earn  { background: #e6f4ea; color: #2d6a4f; }
+        .badge-redeem { background: #fde8e8; color: #9b1c1c; }
+        .badge-adjust { background: #fef3cd; color: #92400e; }
+
+        /* Security matrix */
+        .matrix td:not(:first-child),
+        .matrix th:not(:first-child) {
+            text-align: center;
+        }
+
+        .check { color: #2d6a4f; font-size: 16px; }
+        .cross  { color: #9b1c1c; font-size: 16px; }
+
+        /* Section divider */
+        .section-note {
+            background: #f5f0e8;
+            border: 1px solid #ddd0b8;
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #5c4a2a;
+            margin: 14px 0;
+            font-style: italic;
+        }
+
+        h3 {
+            font-size: 13px;
+            font-family: 'Arial', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #6b5c48;
+            margin: 16px 0 8px;
+        }
+
+        /* Print */
+        @media print {
+            body { background: #fff; }
+            .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .uc-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .module { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+    <div class="cover-label">Documento de especificación</div>
+    <h1>Casos de Uso<br>Club el Bodegón</h1>
+    <div class="cover-sub">Sistema de fidelización y gestión de miembros</div>
+    <div class="cover-meta">Versión 1.0 &nbsp;·&nbsp; Marzo 2026</div>
+</div>
+
+<div class="content">
+
+    <!-- ACTORS -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">ACTORES</span>
+            <h2>Usuarios del sistema</h2>
+        </div>
+        <div class="actors-grid">
+            <div class="actor-card">
+                <div class="actor-name">Visitante</div>
+                <p>Persona no registrada que accede al sitio. Solo puede ver el catálogo público y registrarse.</p>
+            </div>
+            <div class="actor-card">
+                <div class="actor-name">Miembro</div>
+                <p>Cliente registrado del club. Acumula puntos, consulta su perfil y canjea recompensas.</p>
+            </div>
+            <div class="actor-card">
+                <div class="actor-name">Administrador</div>
+                <p>Staff del Bodegón con acceso completo al panel de gestión. Gestiona miembros, puntos, recompensas y canjes.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 1: AUTH -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">MÓDULO 1</span>
+            <h2>Autenticación</h2>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-01</span>
+                <span class="uc-title">Registrarse en el club</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Visitante</span></div>
+                <div class="uc-row"><span class="uc-label">Precondición</span><span class="uc-value">No tener cuenta registrada</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>El visitante ingresa nombre completo, email y contraseña</li>
+                            <li>El sistema crea la cuenta con rol MIEMBRO</li>
+                            <li>Se genera automáticamente el perfil de miembro con 0 puntos y nivel BRONCE</li>
+                            <li>Recibe un token JWT y queda autenticado</li>
+                        </ol>
+                    </span>
+                </div>
+                <div class="uc-row"><span class="uc-label">Resultado</span><span class="uc-value">Acceso al panel de miembro</span></div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-02</span>
+                <span class="uc-title">Iniciar sesión</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Visitante (ya registrado)</span></div>
+                <div class="uc-row"><span class="uc-label">Precondición</span><span class="uc-value">Tener cuenta activa</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Ingresa email y contraseña</li>
+                            <li>El sistema valida las credenciales</li>
+                            <li>Se actualiza la fecha del último acceso</li>
+                            <li>Recibe un token JWT</li>
+                        </ol>
+                    </span>
+                </div>
+                <div class="uc-row"><span class="uc-label">Resultado</span><span class="uc-value">Acceso al panel según su rol (Miembro o Admin)</span></div>
+                <div class="alt-flow"><strong>Flujo alternativo:</strong> Si las credenciales son incorrectas → error 401 Unauthorized</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 2: PROFILE -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">MÓDULO 2</span>
+            <h2>Perfil del Miembro</h2>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-03</span>
+                <span class="uc-title">Ver mi perfil</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Miembro</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Información visible</span>
+                    <span class="uc-value">Nombre completo, email, teléfono, nivel (Bronce / Plata / Oro), puntos disponibles, puntos totales acumulados, cantidad de visitas y fecha de alta en el club</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-04</span>
+                <span class="uc-title">Actualizar datos personales</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Miembro</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Accede a su perfil</li>
+                            <li>Modifica nombre, teléfono o fecha de nacimiento</li>
+                            <li>Guarda los cambios</li>
+                        </ol>
+                    </span>
+                </div>
+                <div class="uc-row"><span class="uc-label">Restricción</span><span class="uc-value">No puede modificar su email ni su rol</span></div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-05</span>
+                <span class="uc-title">Cambiar contraseña</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Miembro</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Accede a la sección "Cuenta"</li>
+                            <li>Ingresa su contraseña actual (verificación obligatoria)</li>
+                            <li>Ingresa la nueva contraseña</li>
+                            <li>El sistema actualiza la contraseña cifrada</li>
+                        </ol>
+                    </span>
+                </div>
+                <div class="alt-flow"><strong>Flujo alternativo:</strong> Si la contraseña actual es incorrecta → error 401 Unauthorized</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 3: POINTS -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">MÓDULO 3</span>
+            <h2>Puntos y Niveles</h2>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-06</span>
+                <span class="uc-title">Ver historial de transacciones</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Miembro</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Accede a "Transacciones"</li>
+                            <li>El sistema muestra la lista paginada de movimientos con tipo, origen, puntos, descripción y fecha</li>
+                        </ol>
+                    </span>
+                </div>
+                <h3>Tipos de transacción</h3>
+                <table>
+                    <thead>
+                        <tr><th>Tipo</th><th>Origen</th><th>Descripción</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="badge badge-earn">EARN</span></td><td>PURCHASE</td><td>Puntos por compra en el local</td></tr>
+                        <tr><td><span class="badge badge-earn">EARN</span></td><td>VISIT</td><td>Puntos por visita registrada</td></tr>
+                        <tr><td><span class="badge badge-earn">EARN</span></td><td>BIRTHDAY</td><td>Bonus de cumpleaños</td></tr>
+                        <tr><td><span class="badge badge-earn">EARN</span></td><td>REFERRAL</td><td>Puntos por referido</td></tr>
+                        <tr><td><span class="badge badge-redeem">REDEEM</span></td><td>REWARD_REDEEM</td><td>Puntos gastados al canjear una recompensa</td></tr>
+                        <tr><td><span class="badge badge-adjust">ADJUST</span></td><td>ADMIN_ADJUST</td><td>Ajuste manual realizado por el administrador</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-07</span>
+                <span class="uc-title">Consultar mi nivel</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Miembro</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Descripción</span>
+                    <span class="uc-value">El nivel se calcula automáticamente en base a los puntos totales acumulados históricamente (no el saldo actual disponible). Sube automáticamente al superar cada umbral.</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>Nivel</th><th>Condición</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Bronce</td><td>Nivel inicial de todo miembro registrado</td></tr>
+                        <tr><td>Plata</td><td>Supera el umbral de plata (configurable por el admin)</td></tr>
+                        <tr><td>Oro</td><td>Supera el umbral de oro (configurable por el admin)</td></tr>
+                    </tbody>
+                </table>
+                <div class="section-note">El nivel nunca retrocede aunque el miembro canjee puntos y baje su saldo.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 4: REWARDS -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">MÓDULO 4</span>
+            <h2>Recompensas</h2>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-08</span>
+                <span class="uc-title">Ver catálogo de recompensas</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Visitante / Miembro</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Accede a la sección "Recompensas"</li>
+                            <li>El sistema muestra todas las recompensas activas con nombre, descripción y costo en puntos</li>
+                        </ol>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-09</span>
+                <span class="uc-title">Canjear una recompensa</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Miembro</span></div>
+                <div class="uc-row"><span class="uc-label">Precondición</span><span class="uc-value">Tener saldo de puntos suficiente. La recompensa debe estar activa y con stock disponible.</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>El miembro selecciona una recompensa del catálogo</li>
+                            <li>El sistema verifica que tenga puntos suficientes</li>
+                            <li>Se descuentan los puntos del saldo actual del miembro</li>
+                            <li>Se registra la transacción como REDEEM</li>
+                            <li>Se genera un código único con formato <code>BDG-XXXXXX</code></li>
+                            <li>El código tiene vigencia de 7 días (configurable)</li>
+                            <li>El código queda en estado <strong>ISSUED</strong> esperando validación del admin</li>
+                        </ol>
+                    </span>
+                </div>
+                <div class="alt-flow"><strong>Flujo alternativo:</strong> Si no tiene puntos suficientes → error 400 Bad Request</div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-10</span>
+                <span class="uc-title">Ver mis canjes</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Miembro</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Accede a "Mis Canjes"</li>
+                            <li>Ve el historial con: nombre de la recompensa, código, puntos gastados, fecha y estado actual</li>
+                        </ol>
+                    </span>
+                </div>
+                <h3>Estados de un canje</h3>
+                <table>
+                    <thead>
+                        <tr><th>Estado</th><th>Significado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>ISSUED</td><td>Código generado, esperando validación del admin en el local</td></tr>
+                        <tr><td>REDEEMED</td><td>Validado por el admin — recompensa entregada</td></tr>
+                        <tr><td>EXPIRED</td><td>El código venció sin ser presentado al admin</td></tr>
+                        <tr><td>CANCELLED</td><td>Anulado manualmente por el admin</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 5: PROMOTIONS -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">MÓDULO 5</span>
+            <h2>Promociones</h2>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-11</span>
+                <span class="uc-title">Ver promociones públicas</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Visitante / Miembro</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">Accede a la sección de promociones y ve las promociones de tipo PUBLIC que estén vigentes (entre su fecha de inicio y fin)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-12</span>
+                <span class="uc-title">Ver promociones exclusivas para miembros</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Miembro</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">Al acceder con sesión iniciada, el miembro ve tanto las promociones PUBLIC como las MEMBERS_ONLY que estén vigentes</span>
+                </div>
+                <div class="uc-row"><span class="uc-label">Restricción</span><span class="uc-value">Las promociones MEMBERS_ONLY no son visibles sin iniciar sesión</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 6: ADMIN MEMBERS -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">MÓDULO 6</span>
+            <h2>Admin — Gestión de Miembros</h2>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-13</span>
+                <span class="uc-title">Ver lista de todos los miembros</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Información visible</span>
+                    <span class="uc-value">Nombre, email, nivel, puntos actuales, puntos totales acumulados, cantidad de visitas y fecha de alta en el club de cada miembro registrado</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-14</span>
+                <span class="uc-title">Sumar puntos a un miembro</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Selecciona un miembro del listado</li>
+                            <li>Ingresa la cantidad de puntos a sumar y una descripción del motivo</li>
+                            <li>El sistema registra la transacción (tipo ADJUST, origen ADMIN_ADJUST)</li>
+                            <li>Se actualiza el saldo del miembro y se recalcula su nivel si corresponde</li>
+                        </ol>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-15</span>
+                <span class="uc-title">Restar puntos a un miembro</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Selecciona un miembro del listado</li>
+                            <li>Ingresa un valor negativo de puntos y una descripción</li>
+                            <li>El sistema descuenta los puntos del saldo y registra la transacción</li>
+                        </ol>
+                    </span>
+                </div>
+                <div class="uc-row"><span class="uc-label">Precondición</span><span class="uc-value">El miembro debe tener saldo suficiente para la deducción</span></div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-16</span>
+                <span class="uc-title">Ver estadísticas generales</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Información visible</span>
+                    <span class="uc-value">Total de miembros registrados, desglose por nivel (Bronce / Plata / Oro), total de puntos emitidos históricamente y total de puntos en circulación (saldos actuales de todos los miembros)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 7: ADMIN REWARDS -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">MÓDULO 7</span>
+            <h2>Admin — Gestión de Recompensas</h2>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-17</span>
+                <span class="uc-title">Crear una recompensa</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Accede a "Recompensas" en el panel admin</li>
+                            <li>Completa el formulario: nombre (obligatorio), descripción, costo en puntos (obligatorio, mínimo 1), stock (vacío = ilimitado) y fechas de validez opcionales</li>
+                            <li>La recompensa se crea en estado <strong>activa</strong> por defecto</li>
+                        </ol>
+                    </span>
+                </div>
+                <div class="alt-flow"><strong>Validación:</strong> El nombre es obligatorio. Sin nombre → error 400 Bad Request</div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-18</span>
+                <span class="uc-title">Editar una recompensa</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Selecciona la recompensa a editar desde el listado completo</li>
+                            <li>Modifica los campos deseados (nombre, descripción, costo, stock, fechas)</li>
+                            <li>Guarda los cambios</li>
+                        </ol>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-19</span>
+                <span class="uc-title">Activar / Desactivar una recompensa</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>En el listado de recompensas, alterna el estado con el botón de activar/desactivar</li>
+                            <li>El estado cambia de activa a inactiva o viceversa</li>
+                        </ol>
+                    </span>
+                </div>
+                <div class="uc-row"><span class="uc-label">Efecto</span><span class="uc-value">Una recompensa inactiva no aparece en el catálogo del miembro y no puede ser canjeada</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 8: ADMIN REDEMPTIONS -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">MÓDULO 8</span>
+            <h2>Admin — Validación de Canjes</h2>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-20</span>
+                <span class="uc-title">Ver canjes pendientes de validación</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Información visible</span>
+                    <span class="uc-value">Lista de todos los códigos en estado ISSUED con: código BDG-XXXXXX, nombre del miembro, recompensa correspondiente, puntos gastados y fecha de vencimiento</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-21</span>
+                <span class="uc-title">Validar un código de canje</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row"><span class="uc-label">Precondición</span><span class="uc-value">El código debe estar en estado ISSUED y no haber vencido</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>El admin ingresa el código <code>BDG-XXXXXX</code> presentado por el miembro</li>
+                            <li>El sistema verifica que el código es válido y no está vencido</li>
+                            <li>El estado cambia a <strong>REDEEMED</strong></li>
+                            <li>Se registra el admin que validó y la fecha de validación</li>
+                            <li>El admin entrega la recompensa al miembro</li>
+                        </ol>
+                    </span>
+                </div>
+                <div class="alt-flow"><strong>Flujo alternativo:</strong> Si el código ya fue usado o está vencido → error con detalle del estado actual</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE 9: ADMIN PROMOTIONS -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">MÓDULO 9</span>
+            <h2>Admin — Gestión de Promociones</h2>
+        </div>
+
+        <div class="uc">
+            <div class="uc-header">
+                <span class="uc-id">CU-22</span>
+                <span class="uc-title">Crear una promoción</span>
+            </div>
+            <div class="uc-body">
+                <div class="uc-row"><span class="uc-label">Actor</span><span class="uc-value">Administrador</span></div>
+                <div class="uc-row">
+                    <span class="uc-label">Flujo principal</span>
+                    <span class="uc-value">
+                        <ol>
+                            <li>Accede a "Promociones" en el panel admin</li>
+                            <li>Completa el formulario: título, descripción, tipo (PUBLIC o MEMBERS_ONLY), fechas de inicio y fin, tipo de descuento, valor e imagen</li>
+                            <li>La promoción se publica inmediatamente</li>
+                        </ol>
+                    </span>
+                </div>
+                <table>
+                    <thead><tr><th>Tipo</th><th>Visibilidad</th></tr></thead>
+                    <tbody>
+                        <tr><td>PUBLIC</td><td>Visible para cualquier persona (con o sin sesión iniciada)</td></tr>
+                        <tr><td>MEMBERS_ONLY</td><td>Visible únicamente para miembros autenticados</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECURITY MATRIX -->
+    <div class="module">
+        <div class="module-header">
+            <span class="module-number">SEGURIDAD</span>
+            <h2>Matriz de permisos</h2>
+        </div>
+
+        <table class="matrix">
+            <thead>
+                <tr>
+                    <th>Acción</th>
+                    <th>Visitante</th>
+                    <th>Miembro</th>
+                    <th>Admin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Registrarse / Iniciar sesión</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Ver catálogo de recompensas</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Ver promociones públicas</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Ver promociones exclusivas para miembros</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Ver y editar perfil propio</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Cambiar contraseña</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Ver historial de transacciones</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Canjear recompensas</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Ver historial de canjes propios</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td>Ver lista completa de miembros</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+                <tr><td>Ajustar puntos de un miembro</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+                <tr><td>Ver estadísticas del sistema</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+                <tr><td>Crear / editar / desactivar recompensas</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+                <tr><td>Ver todos los canjes pendientes</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+                <tr><td>Validar códigos de canje</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+                <tr><td>Crear y publicar promociones</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

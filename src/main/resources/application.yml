@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: club-backend
+  profiles:
+    active: local
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    repair-on-migrate: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
+
+# Custom Application Properties
+app:
+  jwt:
+    secret: ${JWT_SECRET:5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437}
+    access-token-expiration: ${JWT_ACCESS_TTL:28800000} # 8 hours
+    refresh-token-expiration: ${JWT_REFRESH_TTL:604800000} # 7 days
+  business:
+    points-rate-purchase: ${POINTS_RATE_PURCHASE:0.01} # 10 pts per 1000 => 0.01 rate
+    redemption-expires-days: ${REDEMPTION_EXPIRES_DAYS:7}
+    level:
+      silver-threshold: ${LEVEL_SILVER_POINTS:1000}
+      gold-threshold: ${LEVEL_GOLD_POINTS:5000}
+
+logging:
+  level:
+    com.bodegon.club: DEBUG
+    org.springframework.web: INFO
