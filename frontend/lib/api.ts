@@ -15,8 +15,17 @@ import type {
     AdminStats,
 } from './types';
 
+// In production (browser not on localhost) call the backend directly.
+// In local dev, use /api which is handled by the Next.js route handler.
+const getBaseURL = (): string => {
+    if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
+        return 'https://bodegon-backend.onrender.com/api';
+    }
+    return '/api';
+};
+
 const api = axios.create({
-    baseURL: '/api',
+    baseURL: getBaseURL(),
     headers: { 'Content-Type': 'application/json' },
 });
 
