@@ -47,7 +47,4 @@ services:
     plan: free
     envVars:
       - key: BACKEND_URL
-        fromService:
-          type: web
-          name: bodegon-backend
-          property: url
+        value: https://bodegon-backend.onrender.com
