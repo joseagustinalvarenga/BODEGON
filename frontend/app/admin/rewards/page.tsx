@@ -22,17 +22,25 @@ const emptyForm = {
     stock: '',
     triggerType: 'ALWAYS' as RewardTrigger,
     triggerValue: '',
+    validFrom: '',
+    validTo: '',
 };
 
 function triggerLabel(r: Reward) {
     if (!r.triggerType || r.triggerType === 'ALWAYS') return '—';
-    if (r.triggerType === 'BIRTHDAY') return '🎂 Cumpleaños';
-    if (r.triggerType === 'BIRTH_DAY_OF_MONTH') return '📅 Día del mes de nacimiento';
+    if (r.triggerType === 'BIRTHDAY') return '🎂 Día de cumpleaños';
+    if (r.triggerType === 'BIRTH_MONTH') return '🗓️ Mes de cumpleaños';
+    if (r.triggerType === 'BIRTH_DAY_OF_MONTH') return '📅 Día del mes de nac.';
     if (r.triggerType === 'DAY_OF_WEEK') {
         const d = DAYS_OF_WEEK.find(d => d.value === r.triggerValue);
         return `📆 ${d?.label ?? r.triggerValue}`;
     }
     return '—';
+}
+
+function formatDate(dt?: string) {
+    if (!dt) return '';
+    return dt.substring(0, 10); // "2025-12-01T00:00:00" → "2025-12-01"
 }
 
 export default function AdminRewardsPage() {
@@ -65,6 +73,8 @@ export default function AdminRewardsPage() {
             stock: r.stock != null ? String(r.stock) : '',
             triggerType: r.triggerType ?? 'ALWAYS',
             triggerValue: r.triggerValue ?? '',
+            validFrom: formatDate(r.validFrom as unknown as string),
+            validTo: formatDate(r.validTo as unknown as string),
         });
         setShowModal(true);
     };
@@ -78,6 +88,8 @@ export default function AdminRewardsPage() {
             stock: form.stock !== '' ? Number(form.stock) : undefined,
             triggerType: form.triggerType,
             triggerValue: form.triggerType === 'DAY_OF_WEEK' ? form.triggerValue : undefined,
+            validFrom: form.validFrom ? form.validFrom + 'T00:00:00' : undefined,
+            validTo: form.validTo ? form.validTo + 'T23:59:59' : undefined,
         };
         setSaving(true);
         try {
@@ -130,6 +142,7 @@ export default function AdminRewardsPage() {
                                 <th>Puntos</th>
                                 <th>Stock</th>
                                 <th>Disponible para</th>
+                                <th>Vigencia</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -137,7 +150,7 @@ export default function AdminRewardsPage() {
                         <tbody>
                             {rewards.length === 0 ? (
                                 <tr>
-                                    <td colSpan={7} style={{ textAlign: 'center', padding: 32, color: 'var(--text-muted)' }}>
+                                    <td colSpan={8} style={{ textAlign: 'center', padding: 32, color: 'var(--text-muted)' }}>
                                         No hay recompensas. Creá la primera.
                                     </td>
                                 </tr>
@@ -148,6 +161,11 @@ export default function AdminRewardsPage() {
                                     <td style={{ color: 'var(--green-primary)', fontWeight: 700 }}>{r.pointsCost.toLocaleString()}</td>
                                     <td style={{ color: 'var(--text-muted)' }}>{r.stock != null ? r.stock : '∞'}</td>
                                     <td style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{triggerLabel(r)}</td>
+                                    <td style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                                        {r.validFrom || r.validTo
+                                            ? <>{formatDate(r.validFrom as unknown as string) || '∞'} → {formatDate(r.validTo as unknown as string) || '∞'}</>
+                                            : '—'}
+                                    </td>
                                     <td>
                                         <span className={`badge ${r.active ? 'badge-green' : 'badge-silver'}`}>
                                             {r.active ? 'Activa' : 'Inactiva'}
@@ -211,6 +229,26 @@ export default function AdminRewardsPage() {
                                 </div>
                             </div>
 
+                            {/* Vigencia por fechas */}
+                            <div>
+                                <label className="form-label">Vigencia (opcional)</label>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                                    <div>
+                                        <label style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Desde</label>
+                                        <input className="form-input" type="date" value={form.validFrom}
+                                            onChange={e => setForm({ ...form, validFrom: e.target.value })} />
+                                    </div>
+                                    <div>
+                                        <label style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Hasta</label>
+                                        <input className="form-input" type="date" value={form.validTo}
+                                            onChange={e => setForm({ ...form, validTo: e.target.value })} />
+                                    </div>
+                                </div>
+                                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>
+                                    Dejá vacío para que esté siempre disponible
+                                </div>
+                            </div>
+
                             {/* Trigger */}
                             <div>
                                 <label className="form-label">Disponible para</label>
@@ -218,6 +256,7 @@ export default function AdminRewardsPage() {
                                     onChange={e => setForm({ ...form, triggerType: e.target.value as RewardTrigger, triggerValue: '' })}>
                                     <option value="ALWAYS">Todos siempre</option>
                                     <option value="BIRTHDAY">Solo el día de cumpleaños exacto</option>
+                                    <option value="BIRTH_MONTH">Durante todo el mes de cumpleaños</option>
                                     <option value="BIRTH_DAY_OF_MONTH">El día del mes de su nacimiento (ej: todos los días 10)</option>
                                     <option value="DAY_OF_WEEK">Un día de la semana fijo</option>
                                 </select>
@@ -238,13 +277,19 @@ export default function AdminRewardsPage() {
 
                             {form.triggerType === 'BIRTHDAY' && (
                                 <div style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.3)', borderRadius: 8, padding: 12, fontSize: 13, color: '#c9a84c' }}>
-                                    Esta recompensa solo aparecerá el día exacto del cumpleaños del miembro (mismo día y mes).
+                                    Aparece solo el día exacto del cumpleaños del miembro (mismo día y mes).
+                                </div>
+                            )}
+
+                            {form.triggerType === 'BIRTH_MONTH' && (
+                                <div style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.3)', borderRadius: 8, padding: 12, fontSize: 13, color: '#c9a84c' }}>
+                                    Aparece durante todo el mes de cumpleaños del miembro. Ej: si nació en marzo, la ve todo marzo.
                                 </div>
                             )}
 
                             {form.triggerType === 'BIRTH_DAY_OF_MONTH' && (
                                 <div style={{ background: 'rgba(201,168,76,0.08)', border: '1px solid rgba(201,168,76,0.3)', borderRadius: 8, padding: 12, fontSize: 13, color: '#c9a84c' }}>
-                                    Esta recompensa aparecerá para cualquier miembro cuyo día de nacimiento coincida con el día del mes de hoy. Ej: si hoy es día 10, la ven todos los nacidos un día 10 de cualquier mes.
+                                    Aparece para cualquier miembro cuyo día de nacimiento coincida con el día del mes de hoy. Ej: si hoy es día 10, la ven todos los nacidos un día 10.
                                 </div>
                             )}
 
