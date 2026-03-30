@@ -442,6 +442,28 @@ img {
   font-weight: 500;
   color: var(--text-secondary);
   margin-bottom: 8px;
+  letter-spacing: 0.03em;
+}
+
+.form-input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: var(--green-primary);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
 }
 
 /* ============================
