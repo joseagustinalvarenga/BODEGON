@@ -1,5 +1,6 @@
 package com.bodegon.club.controller;
 
+import com.bodegon.club.dto.admin.AdminDto;
 import com.bodegon.club.dto.member.MemberDto;
 import com.bodegon.club.dto.redemption.RedemptionDto;
 import com.bodegon.club.entity.User;
@@ -7,6 +8,7 @@ import com.bodegon.club.repository.UserRepository;
 import com.bodegon.club.service.MemberService;
 import com.bodegon.club.service.PointsService;
 import com.bodegon.club.service.RedemptionService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +60,20 @@ public class AdminController {
         User admin = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
         return ResponseEntity.ok(redemptionService.validateRedemption(code, admin.getId()));
+    }
+
+    @GetMapping("/members/search")
+    public ResponseEntity<MemberDto.Response> searchByDni(@RequestParam String dni) {
+        return memberService.findByDni(dni)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/purchase")
+    public ResponseEntity<AdminDto.PurchaseResponse> registerPurchase(
+            @RequestBody @Valid AdminDto.PurchaseRequest request,
+            Authentication authentication) {
+        return ResponseEntity.ok(memberService.registerPurchase(request, authentication.getName()));
     }
 
     @GetMapping("/stats")

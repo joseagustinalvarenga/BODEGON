@@ -13,6 +13,7 @@ import type {
     AdminMember,
     AdminRedemption,
     AdminStats,
+    PurchaseResponse,
 } from './types';
 
 // In production (browser not on localhost) call the backend directly.
@@ -148,6 +149,10 @@ export const adminApi = {
         api.post<AdminRedemption>(`/admin/redemptions/validate/${code}`).then((r) => r.data),
     getStats: () =>
         api.get<AdminStats>('/admin/stats').then((r) => r.data),
+    searchByDni: (dni: string) =>
+        api.get<MemberProfile>(`/admin/members/search?dni=${encodeURIComponent(dni)}`).then((r) => r.data),
+    registerPurchase: (data: { dni: string; fullName?: string; amount: number }) =>
+        api.post<PurchaseResponse>('/admin/purchase', data).then((r) => r.data),
 };
 
 export default api;

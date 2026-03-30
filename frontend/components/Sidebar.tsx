@@ -17,6 +17,7 @@ const memberNav = [
 
 const adminNav = [
     { href: '/admin', label: 'Dashboard', icon: '📊' },
+    { href: '/admin/purchase', label: 'Registrar Compra', icon: '💰' },
     { href: '/admin/members', label: 'Miembros', icon: '👥' },
     { href: '/admin/rewards', label: 'Recompensas', icon: '🎁' },
     { href: '/admin/promotions', label: 'Promociones', icon: '🔥' },

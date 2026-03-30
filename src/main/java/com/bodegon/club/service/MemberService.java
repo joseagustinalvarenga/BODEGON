@@ -1,13 +1,18 @@
 package com.bodegon.club.service;
 
+import com.bodegon.club.dto.admin.AdminDto;
 import com.bodegon.club.dto.member.MemberDto;
 import com.bodegon.club.entity.MemberProfile;
 import com.bodegon.club.entity.User;
 import com.bodegon.club.entity.enums.MemberLevel;
+import com.bodegon.club.entity.enums.Role;
+import com.bodegon.club.entity.enums.TransactionSource;
+import com.bodegon.club.entity.enums.UserStatus;
 import com.bodegon.club.repository.MemberProfileRepository;
 import com.bodegon.club.repository.PointsTransactionRepository;
 import com.bodegon.club.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -28,6 +34,10 @@ public class MemberService {
     private final PointsTransactionRepository pointsTransactionRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PointsService pointsService;
+
+    @Value("${app.business.points-rate-purchase:0.01}")
+    private double pointsRatePurchase;
 
     @Transactional(readOnly = true)
     public MemberDto.Response getMemberProfile(String email) {
@@ -105,12 +115,68 @@ public class MemberService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public Optional<MemberDto.Response> findByDni(String dni) {
+        return userRepository.findByDni(dni)
+                .flatMap(user -> memberProfileRepository.findByUserId(user.getId())
+                        .map(profile -> mapToDto(user, profile)));
+    }
+
+    @Transactional
+    public AdminDto.PurchaseResponse registerPurchase(AdminDto.PurchaseRequest request, String adminEmail) {
+        User admin = userRepository.findByEmail(adminEmail)
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        Optional<User> existing = userRepository.findByDni(request.getDni());
+        boolean newAccount = existing.isEmpty();
+
+        User user;
+        MemberProfile profile;
+
+        if (newAccount) {
+            if (request.getFullName() == null || request.getFullName().isBlank()) {
+                throw new IllegalArgumentException("El nombre es obligatorio para nuevas cuentas");
+            }
+            user = User.builder()
+                    .fullName(request.getFullName())
+                    .dni(request.getDni())
+                    .email(request.getDni() + "@bodegon.local")
+                    .passwordHash(passwordEncoder.encode(UUID.randomUUID().toString()))
+                    .role(Role.MEMBER)
+                    .status(UserStatus.ACTIVE)
+                    .build();
+            user = userRepository.save(user);
+            profile = memberProfileRepository.save(MemberProfile.builder().user(user).build());
+        } else {
+            user = existing.get();
+            profile = memberProfileRepository.findByUserId(user.getId())
+                    .orElseThrow(() -> new RuntimeException("Profile not found"));
+        }
+
+        int points = (int) Math.floor(request.getAmount() * pointsRatePurchase);
+        if (points > 0) {
+            pointsService.earnPoints(profile.getId(), points, TransactionSource.PURCHASE,
+                    "Compra $" + request.getAmount(), admin);
+            profile = memberProfileRepository.findById(profile.getId()).orElseThrow();
+        }
+
+        return AdminDto.PurchaseResponse.builder()
+                .memberId(profile.getId())
+                .fullName(user.getFullName())
+                .dni(user.getDni())
+                .pointsEarned(points)
+                .currentPoints(profile.getCurrentPoints())
+                .newAccount(newAccount)
+                .build();
+    }
+
     public MemberDto.Response mapToDto(User user, MemberProfile profile) {
         return MemberDto.Response.builder()
                 .userId(user.getId())
                 .memberId(profile.getId())
                 .fullName(user.getFullName())
                 .email(user.getEmail())
+                .dni(user.getDni())
                 .phone(user.getPhone())
                 .role(user.getRole())
                 .status(user.getStatus())

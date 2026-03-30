@@ -131,6 +131,15 @@ export interface AdminRedemption {
     expiresAt: string;
 }
 
+export interface PurchaseResponse {
+    memberId: string;
+    fullName: string;
+    dni: string;
+    pointsEarned: number;
+    currentPoints: number;
+    newAccount: boolean;
+}
+
 export interface AdminStats {
     totalMembers: number;
     bronze: number;

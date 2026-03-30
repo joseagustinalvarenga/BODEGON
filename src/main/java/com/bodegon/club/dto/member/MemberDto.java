@@ -21,6 +21,7 @@ public class MemberDto {
         private UUID memberId;
         private String fullName;
         private String email;
+        private String dni;
         private String phone;
         private Role role;
         private UserStatus status;
