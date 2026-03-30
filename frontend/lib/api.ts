@@ -151,7 +151,7 @@ export const adminApi = {
         api.get<AdminStats>('/admin/stats').then((r) => r.data),
     searchByDni: (dni: string) =>
         api.get<MemberProfile>(`/admin/members/search?dni=${encodeURIComponent(dni)}`).then((r) => r.data),
-    registerPurchase: (data: { dni: string; fullName?: string; amount: number }) =>
+    registerPurchase: (data: { dni: string; fullName?: string; phone?: string; birthDate?: string; amount: number }) =>
         api.post<PurchaseResponse>('/admin/purchase', data).then((r) => r.data),
 };
 

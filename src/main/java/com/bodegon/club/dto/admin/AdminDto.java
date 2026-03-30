@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class AdminDto {
@@ -18,10 +19,12 @@ public class AdminDto {
     public static class PurchaseRequest {
         @NotBlank
         private String dni;
-        private String fullName; // required only when creating a new account
+        private String fullName;   // required when creating new account
+        private String phone;      // optional
+        private LocalDate birthDate; // required when creating new account
         @NotNull
         @Min(1)
-        private Long amount; // amount in pesos
+        private Long amount;
     }
 
     @Data

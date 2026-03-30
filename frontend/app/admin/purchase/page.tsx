@@ -11,6 +11,7 @@ export default function PurchasePage() {
     const [amount, setAmount] = useState('');
     const [fullName, setFullName] = useState('');
     const [phone, setPhone] = useState('');
+    const [birthDate, setBirthDate] = useState('');
     const [member, setMember] = useState<MemberProfile | null>(null);
     const [result, setResult] = useState<PurchaseResponse | null>(null);
     const [loading, setLoading] = useState(false);
@@ -41,12 +42,15 @@ export default function PurchasePage() {
     const handleRegister = async () => {
         if (!amount || Number(amount) <= 0) { setError('Ingresá un monto válido'); return; }
         if (step === 'new-account' && !fullName.trim()) { setError('El nombre es obligatorio'); return; }
+        if (step === 'new-account' && !birthDate) { setError('La fecha de nacimiento es obligatoria'); return; }
         setLoading(true);
         setError('');
         try {
             const res = await adminApi.registerPurchase({
                 dni: dni.trim(),
                 fullName: step === 'new-account' ? fullName.trim() : undefined,
+                phone: step === 'new-account' && phone.trim() ? phone.trim() : undefined,
+                birthDate: step === 'new-account' ? birthDate : undefined,
                 amount: Number(amount),
             });
             setResult(res);
@@ -62,6 +66,7 @@ export default function PurchasePage() {
         setStep('search');
         setDni(''); setAmount(''); setFullName(''); setPhone('');
         setMember(null); setResult(null); setError('');
+        setBirthDate('');
     };
 
     return (
@@ -195,12 +200,32 @@ export default function PurchasePage() {
                     </div>
 
                     <div>
+                        <label className="form-label">DNI</label>
+                        <input
+                            className="form-input"
+                            value={dni}
+                            readOnly
+                            style={{ opacity: 0.6, cursor: 'not-allowed' }}
+                        />
+                    </div>
+
+                    <div>
                         <label className="form-label">Nombre completo <span style={{ color: '#e07070' }}>*</span></label>
                         <input
                             className="form-input"
                             placeholder="Juan Pérez"
                             value={fullName}
                             onChange={e => setFullName(e.target.value)}
+                        />
+                    </div>
+
+                    <div>
+                        <label className="form-label">Fecha de nacimiento <span style={{ color: '#e07070' }}>*</span></label>
+                        <input
+                            className="form-input"
+                            type="date"
+                            value={birthDate}
+                            onChange={e => setBirthDate(e.target.value)}
                         />
                     </div>
 
@@ -233,7 +258,7 @@ export default function PurchasePage() {
                     {error && <div style={{ color: '#e07070', fontSize: 13 }}>{error}</div>}
 
                     <button className="btn-primary" onClick={handleRegister}
-                        disabled={loading || !fullName.trim() || !amount || pointsPreview === 0}
+                        disabled={loading || !fullName.trim() || !birthDate || !amount || pointsPreview === 0}
                         style={{ width: '100%', padding: '13px 0' }}>
                         {loading ? 'Creando cuenta y registrando…' : 'Crear Cuenta y Registrar Compra'}
                     </button>
