@@ -64,6 +64,13 @@ export interface PageResponse<T> {
     size: number;
 }
 
+// Level config
+export interface LevelConfig {
+    level: 'BRONZE' | 'SILVER' | 'GOLD';
+    threshold: number;
+    perks: string[];
+}
+
 // Rewards
 export type RewardTrigger = 'ALWAYS' | 'BIRTHDAY' | 'BIRTH_MONTH' | 'BIRTH_DAY_OF_MONTH' | 'DAY_OF_WEEK';
 

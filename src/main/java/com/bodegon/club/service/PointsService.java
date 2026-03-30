@@ -10,7 +10,6 @@ import com.bodegon.club.repository.MemberProfileRepository;
 import com.bodegon.club.repository.PointsTransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,19 +21,13 @@ public class PointsService {
 
     private final MemberProfileRepository memberProfileRepository;
     private final PointsTransactionRepository transactionRepository;
-
-    @Value("${app.business.level.silver-threshold}")
-    private int silverThreshold;
-
-    @Value("${app.business.level.gold-threshold}")
-    private int goldThreshold;
+    private final LevelConfigService levelConfigService;
 
     @Transactional
     public void earnPoints(UUID memberId, int points, TransactionSource source, String description, User adminUser) {
         MemberProfile profile = memberProfileRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("Member Profile not found"));
 
-        // Create Transaction
         PointsTransaction tx = PointsTransaction.builder()
                 .member(profile)
                 .type(TransactionType.EARN)
@@ -45,7 +38,6 @@ public class PointsService {
                 .build();
         transactionRepository.save(tx);
 
-        // Update Member stats
         profile.setCurrentPoints(profile.getCurrentPoints() + points);
         profile.setTotalPointsEarned(profile.getTotalPointsEarned() + points);
 
@@ -59,7 +51,6 @@ public class PointsService {
         MemberProfile profile = memberProfileRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("Member Profile not found"));
 
-        // Allow negative adjustments
         PointsTransaction tx = PointsTransaction.builder()
                 .member(profile)
                 .type(TransactionType.ADJUST)
@@ -80,8 +71,10 @@ public class PointsService {
 
     private void recalculateLevel(MemberProfile profile) {
         int total = profile.getTotalPointsEarned();
-        MemberLevel newLevel = MemberLevel.BRONZE;
+        int silverThreshold = levelConfigService.getThreshold(MemberLevel.SILVER);
+        int goldThreshold   = levelConfigService.getThreshold(MemberLevel.GOLD);
 
+        MemberLevel newLevel = MemberLevel.BRONZE;
         if (total >= goldThreshold) {
             newLevel = MemberLevel.GOLD;
         } else if (total >= silverThreshold) {

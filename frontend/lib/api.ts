@@ -14,6 +14,7 @@ import type {
     AdminRedemption,
     AdminStats,
     PurchaseResponse,
+    LevelConfig,
 } from './types';
 
 // In production (browser not on localhost) call the backend directly.
@@ -129,6 +130,13 @@ export const rewardApi = {
         api.put<Reward>(`/rewards/${id}`, data).then((r) => r.data),
     toggle: (id: string) =>
         api.patch<Reward>(`/rewards/${id}/toggle`).then((r) => r.data),
+};
+
+// Level config
+export const levelApi = {
+    getAll: () => api.get<LevelConfig[]>('/levels').then((r) => r.data),
+    update: (level: string, data: { threshold: number; perks: string[] }) =>
+        api.put<LevelConfig>(`/admin/levels/${level}`, data).then((r) => r.data),
 };
 
 // Redemptions

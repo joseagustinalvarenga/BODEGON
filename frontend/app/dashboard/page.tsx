@@ -1,31 +1,53 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { memberApi } from '@/lib/api';
-import type { MemberProfile } from '@/lib/types';
+import { memberApi, levelApi } from '@/lib/api';
+import type { MemberProfile, LevelConfig } from '@/lib/types';
 import Link from 'next/link';
 
-const LEVEL_DATA = {
-    GOLD:   { label: 'Oro',    icon: '🥇', color: '#fbbf24', nextLabel: null,   nextPts: null, minPts: 5000 },
-    SILVER: { label: 'Plata',  icon: '🥈', color: '#94a3b8', nextLabel: 'Oro',  nextPts: 5000, minPts: 1000 },
-    BRONZE: { label: 'Bronce', icon: '🥉', color: '#b4865a', nextLabel: 'Plata', nextPts: 1000, minPts: 0 },
+const LEVEL_META = {
+    GOLD:   { label: 'Oro',    icon: '🥇', color: '#fbbf24' },
+    SILVER: { label: 'Plata',  icon: '🥈', color: '#94a3b8' },
+    BRONZE: { label: 'Bronce', icon: '🥉', color: '#b4865a' },
 };
 
 export default function DashboardPage() {
-    const [profile, setProfile] = useState<MemberProfile | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [profile, setProfile]   = useState<MemberProfile | null>(null);
+    const [levels, setLevels]     = useState<LevelConfig[]>([]);
+    const [loading, setLoading]   = useState(true);
 
     useEffect(() => {
-        memberApi.getProfile().then(setProfile).catch(console.error).finally(() => setLoading(false));
+        Promise.all([
+            memberApi.getProfile(),
+            levelApi.getAll(),
+        ]).then(([p, l]) => {
+            setProfile(p);
+            setLevels(l);
+        }).catch(console.error).finally(() => setLoading(false));
     }, []);
 
     if (loading) return <div className="page-container fade-in" style={{ padding: 32, color: 'var(--text-muted)' }}>Cargando tu perfil...</div>;
 
-    const levelInfo = LEVEL_DATA[profile?.level ?? 'BRONZE'];
-    const earned = profile?.totalPointsEarned ?? 0;
-    const progress = levelInfo.nextPts
-        ? Math.min(((earned - levelInfo.minPts) / (levelInfo.nextPts - levelInfo.minPts)) * 100, 100)
+    const currentLevel  = profile?.level ?? 'BRONZE';
+    const meta          = LEVEL_META[currentLevel];
+    const earned        = profile?.totalPointsEarned ?? 0;
+
+    const silverCfg = levels.find(l => l.level === 'SILVER');
+    const goldCfg   = levels.find(l => l.level === 'GOLD');
+
+    const thresholds: Record<string, number> = {
+        BRONZE: 0,
+        SILVER: silverCfg?.threshold ?? 1000,
+        GOLD:   goldCfg?.threshold   ?? 5000,
+    };
+
+    const nextLevel     = currentLevel === 'BRONZE' ? 'SILVER' : currentLevel === 'SILVER' ? 'GOLD' : null;
+    const nextMeta      = nextLevel ? LEVEL_META[nextLevel] : null;
+    const nextThreshold = nextLevel ? thresholds[nextLevel] : null;
+    const minPts        = thresholds[currentLevel];
+    const progress      = nextThreshold
+        ? Math.min(((earned - minPts) / (nextThreshold - minPts)) * 100, 100)
         : 100;
-    const ptsToNext = levelInfo.nextPts ? Math.max(levelInfo.nextPts - earned, 0) : 0;
+    const ptsToNext = nextThreshold ? Math.max(nextThreshold - earned, 0) : 0;
     const firstName = profile?.fullName?.split(' ')[0] ?? 'Usuario';
 
     return (
@@ -47,31 +69,31 @@ export default function DashboardPage() {
                     <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 6 }}>puntos disponibles</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 16px', background: `${levelInfo.color}20`, border: `1px solid ${levelInfo.color}40`, borderRadius: 'var(--radius-full)', marginBottom: 12 }}>
-                        <span style={{ fontSize: 20 }}>{levelInfo.icon}</span>
-                        <span style={{ color: levelInfo.color, fontWeight: 700, fontSize: 14 }}>Nivel {levelInfo.label}</span>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 16px', background: `${meta.color}20`, border: `1px solid ${meta.color}40`, borderRadius: 'var(--radius-full)', marginBottom: 12 }}>
+                        <span style={{ fontSize: 20 }}>{meta.icon}</span>
+                        <span style={{ color: meta.color, fontWeight: 700, fontSize: 14 }}>Nivel {meta.label}</span>
                     </div>
-                    {levelInfo.nextPts && (
+                    {nextThreshold && (
                         <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                            {ptsToNext.toLocaleString()} pts para nivel {levelInfo.nextLabel}
+                            {ptsToNext.toLocaleString()} pts para nivel {nextMeta?.label}
                         </div>
                     )}
                 </div>
             </div>
 
             {/* Progress bar */}
-            {levelInfo.nextPts && (
+            {nextThreshold && (
                 <div className="card" style={{ marginBottom: 24 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-                        <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Progreso hacia nivel {levelInfo.nextLabel}</span>
-                        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{earned.toLocaleString()} / {levelInfo.nextPts.toLocaleString()} pts totales</span>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>Progreso hacia nivel {nextMeta?.label}</span>
+                        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{earned.toLocaleString()} / {nextThreshold.toLocaleString()} pts totales</span>
                     </div>
                     <div className="points-bar-wrap">
                         <div className="points-bar-fill" style={{ width: `${progress}%` }} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
-                        <span style={{ fontSize: 11, color: levelInfo.color }}>{levelInfo.label}</span>
-                        <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{levelInfo.nextLabel}</span>
+                        <span style={{ fontSize: 11, color: meta.color }}>{meta.label}</span>
+                        <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{nextMeta?.label}</span>
                     </div>
                 </div>
             )}
@@ -80,7 +102,7 @@ export default function DashboardPage() {
             <div className="grid-stats">
                 {[
                     { label: 'Puntos Disponibles', val: (profile?.currentPoints ?? 0).toLocaleString(), icon: '⭐', color: 'green', link: '/dashboard/analytics' },
-                    { label: 'Nivel Actual', val: levelInfo.label, icon: levelInfo.icon, color: '', link: null },
+                    { label: 'Nivel Actual', val: meta.label, icon: meta.icon, color: '', link: null },
                     { label: 'Total Visitas', val: (profile?.totalVisits ?? 0).toString(), icon: '📅', color: '', link: null },
                     { label: 'Recompensas', val: 'Ver →', icon: '🎁', color: 'green', link: '/dashboard/rewards' },
                 ].map((s) => (
@@ -90,7 +112,7 @@ export default function DashboardPage() {
                         {s.link ? (
                             <Link href={s.link}><div className={`stat-value ${s.color}`} style={{ fontSize: 18, cursor: 'pointer' }}>{s.val}</div></Link>
                         ) : (
-                            <div className={`stat-value ${s.color}`} style={{ fontSize: s.color ? 28 : 20, color: s.color ? undefined : levelInfo.color }}>{s.val}</div>
+                            <div className={`stat-value ${s.color}`} style={{ fontSize: s.color ? 28 : 20, color: s.color ? undefined : meta.color }}>{s.val}</div>
                         )}
                     </div>
                 ))}
