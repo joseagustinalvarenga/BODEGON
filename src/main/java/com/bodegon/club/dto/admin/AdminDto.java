@@ -19,8 +19,9 @@ public class AdminDto {
     public static class PurchaseRequest {
         @NotBlank
         private String dni;
-        private String fullName;   // required when creating new account
-        private String phone;      // optional
+        private String fullName;    // required when creating new account
+        private String email;       // required when creating new account
+        private String phone;       // optional
         private LocalDate birthDate; // required when creating new account
         @NotNull
         @Min(1)

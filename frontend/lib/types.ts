@@ -65,6 +65,8 @@ export interface PageResponse<T> {
 }
 
 // Rewards
+export type RewardTrigger = 'ALWAYS' | 'BIRTHDAY' | 'BIRTH_DAY_OF_MONTH' | 'DAY_OF_WEEK';
+
 export interface Reward {
     id: string;
     name: string;
@@ -74,6 +76,8 @@ export interface Reward {
     imageUrl?: string;
     active: boolean;
     stock?: number;
+    triggerType?: RewardTrigger;
+    triggerValue?: string;
 }
 
 // Promotions

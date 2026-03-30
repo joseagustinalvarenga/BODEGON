@@ -1,5 +1,6 @@
 package com.bodegon.club.dto.reward;
 
+import com.bodegon.club.entity.enums.RewardTrigger;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,6 +23,8 @@ public class RewardDto {
         private Boolean active;
         private LocalDateTime validFrom;
         private LocalDateTime validTo;
+        private RewardTrigger triggerType;
+        private String triggerValue;
     }
 
     @Data
@@ -35,5 +38,7 @@ public class RewardDto {
         private Integer stock;
         private LocalDateTime validFrom;
         private LocalDateTime validTo;
+        private RewardTrigger triggerType;
+        private String triggerValue;
     }
 }

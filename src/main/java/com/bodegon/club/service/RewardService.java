@@ -2,6 +2,7 @@ package com.bodegon.club.service;
 
 import com.bodegon.club.dto.reward.RewardDto;
 import com.bodegon.club.entity.Reward;
+import com.bodegon.club.entity.enums.RewardTrigger;
 import com.bodegon.club.repository.RewardRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class RewardService {
 
     @Transactional
     public RewardDto.Response createReward(RewardDto.Request request) {
+        RewardTrigger trigger = request.getTriggerType() != null ? request.getTriggerType() : RewardTrigger.ALWAYS;
         Reward reward = Reward.builder()
                 .name(request.getName())
                 .description(request.getDescription())
@@ -39,6 +41,8 @@ public class RewardService {
                 .stock(request.getStock())
                 .validFrom(request.getValidFrom())
                 .validTo(request.getValidTo())
+                .triggerType(trigger)
+                .triggerValue(request.getTriggerValue())
                 .active(true)
                 .build();
         return mapToDto(rewardRepository.save(reward));
@@ -54,6 +58,8 @@ public class RewardService {
         reward.setStock(request.getStock());
         reward.setValidFrom(request.getValidFrom());
         reward.setValidTo(request.getValidTo());
+        reward.setTriggerType(request.getTriggerType() != null ? request.getTriggerType() : RewardTrigger.ALWAYS);
+        reward.setTriggerValue(request.getTriggerValue());
         return mapToDto(rewardRepository.save(reward));
     }
 
@@ -75,6 +81,8 @@ public class RewardService {
                 .active(r.getActive())
                 .validFrom(r.getValidFrom())
                 .validTo(r.getValidTo())
+                .triggerType(r.getTriggerType())
+                .triggerValue(r.getTriggerValue())
                 .build();
     }
 }

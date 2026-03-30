@@ -1,5 +1,6 @@
 package com.bodegon.club.entity;
 
+import com.bodegon.club.entity.enums.RewardTrigger;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,4 +38,13 @@ public class Reward extends BaseEntity {
 
     @Column(name = "valid_to")
     private LocalDateTime validTo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "trigger_type", nullable = false)
+    @Builder.Default
+    private RewardTrigger triggerType = RewardTrigger.ALWAYS;
+
+    // For DAY_OF_WEEK: "MONDAY","TUESDAY",... For BIRTH_DAY_OF_MONTH: not used (day comes from member profile)
+    @Column(name = "trigger_value")
+    private String triggerValue;
 }

@@ -137,14 +137,20 @@ public class MemberService {
             if (request.getFullName() == null || request.getFullName().isBlank()) {
                 throw new IllegalArgumentException("El nombre es obligatorio para nuevas cuentas");
             }
+            if (request.getEmail() == null || request.getEmail().isBlank()) {
+                throw new IllegalArgumentException("El email es obligatorio para nuevas cuentas");
+            }
             if (request.getBirthDate() == null) {
                 throw new IllegalArgumentException("La fecha de nacimiento es obligatoria para nuevas cuentas");
+            }
+            if (userRepository.existsByEmail(request.getEmail())) {
+                throw new IllegalArgumentException("Ya existe una cuenta con ese email");
             }
             user = User.builder()
                     .fullName(request.getFullName())
                     .dni(request.getDni())
                     .phone(request.getPhone() != null && !request.getPhone().isBlank() ? request.getPhone() : null)
-                    .email(request.getDni() + "@bodegon.local")
+                    .email(request.getEmail().trim())
                     .passwordHash(passwordEncoder.encode(UUID.randomUUID().toString()))
                     .role(Role.MEMBER)
                     .status(UserStatus.ACTIVE)
