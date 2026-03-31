@@ -16,6 +16,7 @@ export default function CreatePromotionPage() {
         startDate: '',
         endDate: '',
         memberOnly: false,
+        requiredLevel: '',
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -30,6 +31,7 @@ export default function CreatePromotionPage() {
                 endAt: form.endDate ? `${form.endDate}T23:59:59` : '',
                 discountType: form.discountType as 'PERCENTAGE' | 'FIXED' | 'POINTS_MULTIPLIER',
                 discountValue: parseFloat(form.discountValue),
+                requiredLevel: form.requiredLevel || undefined,
             });
             toast.success('¡Promoción creada!');
             router.push('/admin/promotions');
@@ -164,6 +166,24 @@ export default function CreatePromotionPage() {
                                 Si está habilitado, solo los miembros registrados verán esta promoción
                             </div>
                         </label>
+                    </div>
+
+                    {/* Nivel mínimo */}
+                    <div className="form-group" style={{ marginTop: 16 }}>
+                        <label className="form-label">Nivel mínimo requerido</label>
+                        <select
+                            className="form-input"
+                            value={form.requiredLevel}
+                            onChange={(e) => setForm({ ...form, requiredLevel: e.target.value })}
+                        >
+                            <option value="">Todos los niveles</option>
+                            <option value="BRONZE">🥉 Bronce o superior</option>
+                            <option value="SILVER">🥈 Plata o superior</option>
+                            <option value="GOLD">🥇 Solo Oro</option>
+                        </select>
+                        <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>
+                            Solo los miembros con ese nivel o superior podrán ver esta promoción.
+                        </div>
                     </div>
 
                     <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>

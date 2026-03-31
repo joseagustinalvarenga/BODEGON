@@ -85,6 +85,9 @@ export interface Reward {
     stock?: number;
     triggerType?: RewardTrigger;
     triggerValue?: string;
+    requiredLevel?: 'BRONZE' | 'SILVER' | 'GOLD' | null;
+    validFrom?: string;
+    validTo?: string;
 }
 
 // Promotions
@@ -94,14 +97,15 @@ export interface Promotion {
     description: string;
     discountType: 'PERCENTAGE' | 'FIXED' | 'POINTS_MULTIPLIER';
     discountValue: number;
-    startDate: string; // Keep for compatibility if needed
-    endDate: string;   // Keep for compatibility if needed
+    startDate: string;
+    endDate: string;
     startAt: string;
     endAt: string;
     type: 'PUBLIC' | 'MEMBERS_ONLY';
     memberOnly: boolean;
     active: boolean;
     imageUrl?: string;
+    requiredLevel?: 'BRONZE' | 'SILVER' | 'GOLD' | null;
 }
 
 // Redemptions

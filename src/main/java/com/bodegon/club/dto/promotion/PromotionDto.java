@@ -1,5 +1,6 @@
 package com.bodegon.club.dto.promotion;
 
+import com.bodegon.club.entity.enums.MemberLevel;
 import com.bodegon.club.entity.enums.PromotionStatus;
 import com.bodegon.club.entity.enums.PromotionType;
 import jakarta.validation.constraints.Future;
@@ -26,6 +27,7 @@ public class PromotionDto {
         private String imageUrl;
         private String discountType;
         private Double discountValue;
+        private MemberLevel requiredLevel;
     }
 
     @Data
@@ -43,5 +45,6 @@ public class PromotionDto {
         private String imageUrl;
         private String discountType;
         private Double discountValue;
+        private MemberLevel requiredLevel;
     }
 }

@@ -1,5 +1,6 @@
 package com.bodegon.club.entity;
 
+import com.bodegon.club.entity.enums.MemberLevel;
 import com.bodegon.club.entity.enums.PromotionStatus;
 import com.bodegon.club.entity.enums.PromotionType;
 import jakarta.persistence.*;
@@ -53,4 +54,9 @@ public class Promotion extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
     private User createdBy;
+
+    // Null = disponible para todos los niveles
+    @Enumerated(EnumType.STRING)
+    @Column(name = "required_level")
+    private MemberLevel requiredLevel;
 }

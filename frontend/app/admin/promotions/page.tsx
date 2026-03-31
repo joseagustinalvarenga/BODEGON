@@ -41,6 +41,7 @@ export default function AdminPromotionsPage() {
                                 <th>Tipo</th>
                                 <th>Descuento</th>
                                 <th>Acceso</th>
+                                <th>Nivel mínimo</th>
                                 <th>Vence</th>
                                 <th>Estado</th>
                                 <th></th>
@@ -49,7 +50,7 @@ export default function AdminPromotionsPage() {
                         <tbody>
                             {promos.length === 0 ? (
                                 <tr>
-                                    <td colSpan={7} style={{ textAlign: 'center', color: 'var(--text-muted)', padding: 32 }}>
+                                    <td colSpan={8} style={{ textAlign: 'center', color: 'var(--text-muted)', padding: 32 }}>
                                         Sin promociones. <Link href="/admin/promotions/create" style={{ color: 'var(--green-primary)' }}>Crear una →</Link>
                                     </td>
                                 </tr>
@@ -67,6 +68,13 @@ export default function AdminPromotionsPage() {
                                             ) : (
                                                 <span className="badge badge-silver">Público</span>
                                             )}
+                                        </td>
+                                        <td style={{ fontSize: 12 }}>
+                                            {p.requiredLevel ? (
+                                                <span style={{ padding: '3px 8px', borderRadius: 12, background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)', color: '#c9a84c', fontWeight: 600 }}>
+                                                    {p.requiredLevel === 'BRONZE' ? '🥉 Bronce+' : p.requiredLevel === 'SILVER' ? '🥈 Plata+' : '🥇 Oro'}
+                                                </span>
+                                            ) : <span style={{ color: 'var(--text-muted)' }}>Todos</span>}
                                         </td>
                                         <td style={{ color: 'var(--text-muted)', fontSize: 12 }}>
                                             {new Date(p.endAt).toLocaleDateString('es-AR')}

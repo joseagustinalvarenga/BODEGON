@@ -1,0 +1,2 @@
+ALTER TABLE rewards     ADD COLUMN IF NOT EXISTS required_level VARCHAR(20);
+ALTER TABLE promotions  ADD COLUMN IF NOT EXISTS required_level VARCHAR(20);

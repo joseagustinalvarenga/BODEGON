@@ -1,5 +1,6 @@
 package com.bodegon.club.entity;
 
+import com.bodegon.club.entity.enums.MemberLevel;
 import com.bodegon.club.entity.enums.RewardTrigger;
 import jakarta.persistence.*;
 import lombok.*;
@@ -47,4 +48,9 @@ public class Reward extends BaseEntity {
     // For DAY_OF_WEEK: "MONDAY","TUESDAY",... For BIRTH_DAY_OF_MONTH: not used (day comes from member profile)
     @Column(name = "trigger_value")
     private String triggerValue;
+
+    // Null = disponible para todos los niveles
+    @Enumerated(EnumType.STRING)
+    @Column(name = "required_level")
+    private MemberLevel requiredLevel;
 }

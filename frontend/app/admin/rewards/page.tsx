@@ -15,6 +15,19 @@ const DAYS_OF_WEEK = [
     { value: 'SUNDAY', label: 'Domingo' },
 ];
 
+const LEVEL_OPTIONS = [
+    { value: '', label: 'Todos los niveles' },
+    { value: 'BRONZE', label: '🥉 Bronce o superior' },
+    { value: 'SILVER', label: '🥈 Plata o superior' },
+    { value: 'GOLD',   label: '🥇 Solo Oro' },
+];
+
+const LEVEL_LABELS: Record<string, string> = {
+    BRONZE: '🥉 Bronce+',
+    SILVER: '🥈 Plata+',
+    GOLD:   '🥇 Oro',
+};
+
 const emptyForm = {
     name: '',
     description: '',
@@ -24,6 +37,7 @@ const emptyForm = {
     triggerValue: '',
     validFrom: '',
     validTo: '',
+    requiredLevel: '',
 };
 
 function triggerLabel(r: Reward) {
@@ -75,6 +89,7 @@ export default function AdminRewardsPage() {
             triggerValue: r.triggerValue ?? '',
             validFrom: formatDate(r.validFrom as unknown as string),
             validTo: formatDate(r.validTo as unknown as string),
+            requiredLevel: r.requiredLevel ?? '',
         });
         setShowModal(true);
     };
@@ -90,6 +105,7 @@ export default function AdminRewardsPage() {
             triggerValue: form.triggerType === 'DAY_OF_WEEK' ? form.triggerValue : undefined,
             validFrom: form.validFrom ? form.validFrom + 'T00:00:00' : undefined,
             validTo: form.validTo ? form.validTo + 'T23:59:59' : undefined,
+            requiredLevel: form.requiredLevel || undefined,
         };
         setSaving(true);
         try {
@@ -142,6 +158,7 @@ export default function AdminRewardsPage() {
                                 <th>Puntos</th>
                                 <th>Stock</th>
                                 <th>Disponible para</th>
+                                <th>Nivel mínimo</th>
                                 <th>Vigencia</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -161,6 +178,11 @@ export default function AdminRewardsPage() {
                                     <td style={{ color: 'var(--green-primary)', fontWeight: 700 }}>{r.pointsCost.toLocaleString()}</td>
                                     <td style={{ color: 'var(--text-muted)' }}>{r.stock != null ? r.stock : '∞'}</td>
                                     <td style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{triggerLabel(r)}</td>
+                                    <td style={{ fontSize: 12 }}>
+                                        {r.requiredLevel
+                                            ? <span style={{ padding: '3px 8px', borderRadius: 12, background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)', color: '#c9a84c', fontWeight: 600 }}>{LEVEL_LABELS[r.requiredLevel]}</span>
+                                            : <span style={{ color: 'var(--text-muted)' }}>Todos</span>}
+                                    </td>
                                     <td style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                                         {r.validFrom || r.validTo
                                             ? <>{formatDate(r.validFrom as unknown as string) || '∞'} → {formatDate(r.validTo as unknown as string) || '∞'}</>
@@ -292,6 +314,20 @@ export default function AdminRewardsPage() {
                                     Aparece para cualquier miembro cuyo día de nacimiento coincida con el día del mes de hoy. Ej: si hoy es día 10, la ven todos los nacidos un día 10.
                                 </div>
                             )}
+
+                            {/* Nivel mínimo requerido */}
+                            <div>
+                                <label className="form-label">Nivel mínimo requerido</label>
+                                <select className="form-input" value={form.requiredLevel}
+                                    onChange={e => setForm({ ...form, requiredLevel: e.target.value })}>
+                                    {LEVEL_OPTIONS.map(o => (
+                                        <option key={o.value} value={o.value}>{o.label}</option>
+                                    ))}
+                                </select>
+                                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>
+                                    Solo los miembros con ese nivel o superior podrán verla y canjearla.
+                                </div>
+                            </div>
 
                             <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
                                 <button className="btn-primary" type="submit" disabled={saving} style={{ flex: 1 }}>

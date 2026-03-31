@@ -1,5 +1,6 @@
 package com.bodegon.club.dto.reward;
 
+import com.bodegon.club.entity.enums.MemberLevel;
 import com.bodegon.club.entity.enums.RewardTrigger;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -25,6 +26,7 @@ public class RewardDto {
         private LocalDateTime validTo;
         private RewardTrigger triggerType;
         private String triggerValue;
+        private MemberLevel requiredLevel;
     }
 
     @Data
@@ -40,5 +42,6 @@ public class RewardDto {
         private LocalDateTime validTo;
         private RewardTrigger triggerType;
         private String triggerValue;
+        private MemberLevel requiredLevel;
     }
 }

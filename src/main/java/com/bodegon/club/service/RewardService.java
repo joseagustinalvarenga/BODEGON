@@ -2,6 +2,7 @@ package com.bodegon.club.service;
 
 import com.bodegon.club.dto.reward.RewardDto;
 import com.bodegon.club.entity.Reward;
+import com.bodegon.club.entity.enums.MemberLevel;
 import com.bodegon.club.entity.enums.RewardTrigger;
 import com.bodegon.club.repository.RewardRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,12 +20,15 @@ public class RewardService {
 
     private final RewardRepository rewardRepository;
 
-    public List<RewardDto.Response> getActiveRewards() {
+    /** Para el cliente: solo recompensas activas accesibles para su nivel */
+    public List<RewardDto.Response> getActiveRewards(MemberLevel memberLevel) {
         return rewardRepository.findByActiveTrue().stream()
+                .filter(r -> r.getRequiredLevel() == null || isLevelSufficient(memberLevel, r.getRequiredLevel()))
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
+    /** Para el admin: todas */
     public List<RewardDto.Response> getAllRewards() {
         return rewardRepository.findAll().stream()
                 .map(this::mapToDto)
@@ -43,6 +47,7 @@ public class RewardService {
                 .validTo(request.getValidTo())
                 .triggerType(trigger)
                 .triggerValue(request.getTriggerValue())
+                .requiredLevel(request.getRequiredLevel())
                 .active(true)
                 .build();
         return mapToDto(rewardRepository.save(reward));
@@ -60,6 +65,7 @@ public class RewardService {
         reward.setValidTo(request.getValidTo());
         reward.setTriggerType(request.getTriggerType() != null ? request.getTriggerType() : RewardTrigger.ALWAYS);
         reward.setTriggerValue(request.getTriggerValue());
+        reward.setRequiredLevel(request.getRequiredLevel());
         return mapToDto(rewardRepository.save(reward));
     }
 
@@ -69,6 +75,20 @@ public class RewardService {
                 .orElseThrow(() -> new EntityNotFoundException("Reward not found"));
         reward.setActive(!reward.getActive());
         return mapToDto(rewardRepository.save(reward));
+    }
+
+    /** true si el nivel del miembro cumple o supera el requerido */
+    private boolean isLevelSufficient(MemberLevel member, MemberLevel required) {
+        if (member == null) return false;
+        return levelRank(member) >= levelRank(required);
+    }
+
+    private int levelRank(MemberLevel level) {
+        return switch (level) {
+            case BRONZE -> 1;
+            case SILVER -> 2;
+            case GOLD   -> 3;
+        };
     }
 
     private RewardDto.Response mapToDto(Reward r) {
@@ -83,6 +103,7 @@ public class RewardService {
                 .validTo(r.getValidTo())
                 .triggerType(r.getTriggerType())
                 .triggerValue(r.getTriggerValue())
+                .requiredLevel(r.getRequiredLevel())
                 .build();
     }
 }

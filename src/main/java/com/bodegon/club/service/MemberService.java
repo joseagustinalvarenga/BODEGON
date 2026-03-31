@@ -40,6 +40,14 @@ public class MemberService {
     private double pointsRatePurchase;
 
     @Transactional(readOnly = true)
+    public MemberLevel getMemberLevel(String email) {
+        return userRepository.findByEmail(email)
+                .flatMap(u -> memberProfileRepository.findByUserId(u.getId()))
+                .map(MemberProfile::getLevel)
+                .orElse(MemberLevel.BRONZE);
+    }
+
+    @Transactional(readOnly = true)
     public MemberDto.Response getMemberProfile(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));

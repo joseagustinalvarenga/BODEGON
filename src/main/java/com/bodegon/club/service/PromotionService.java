@@ -3,6 +3,7 @@ package com.bodegon.club.service;
 import com.bodegon.club.dto.promotion.PromotionDto;
 import com.bodegon.club.entity.Promotion;
 import com.bodegon.club.entity.User;
+import com.bodegon.club.entity.enums.MemberLevel;
 import com.bodegon.club.entity.enums.PromotionStatus;
 import com.bodegon.club.entity.enums.PromotionType;
 import com.bodegon.club.repository.PromotionRepository;
@@ -23,15 +24,21 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
     private final UserRepository userRepository;
 
-    public List<PromotionDto.Response> getAccessablePromotions(boolean isMember) {
+    /**
+     * @param memberLevel null = usuario no autenticado (solo ve PUBLIC sin restricción de nivel)
+     */
+    public List<PromotionDto.Response> getAccessablePromotions(MemberLevel memberLevel) {
         LocalDateTime now = LocalDateTime.now();
         List<Promotion> promotions;
-        if (isMember) {
-            promotions = promotionRepository.findActivePromotions(now, null); // All types
+        if (memberLevel != null) {
+            promotions = promotionRepository.findActivePromotions(now, null); // miembro: ve PUBLIC + MEMBERS_ONLY
         } else {
-            promotions = promotionRepository.findActivePromotions(now, PromotionType.PUBLIC);
+            promotions = promotionRepository.findActivePromotions(now, PromotionType.PUBLIC); // público: solo PUBLIC
         }
-        return promotions.stream().map(this::mapToDto).collect(Collectors.toList());
+        return promotions.stream()
+                .filter(p -> p.getRequiredLevel() == null || isLevelSufficient(memberLevel, p.getRequiredLevel()))
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -49,6 +56,7 @@ public class PromotionService {
                 .imageUrl(request.getImageUrl())
                 .discountType(request.getDiscountType())
                 .discountValue(request.getDiscountValue())
+                .requiredLevel(request.getRequiredLevel())
                 .createdBy(admin)
                 .build();
 
@@ -67,6 +75,7 @@ public class PromotionService {
         promotion.setEndAt(request.getEndAt());
         promotion.setDiscountType(request.getDiscountType());
         promotion.setDiscountValue(request.getDiscountValue());
+        promotion.setRequiredLevel(request.getRequiredLevel());
         if (request.getImageUrl() != null) {
             promotion.setImageUrl(request.getImageUrl());
         }
@@ -74,7 +83,19 @@ public class PromotionService {
         return mapToDto(promotionRepository.save(promotion));
     }
 
-    // Simplification: Manual Mapper
+    private boolean isLevelSufficient(MemberLevel member, MemberLevel required) {
+        if (member == null) return false;
+        return levelRank(member) >= levelRank(required);
+    }
+
+    private int levelRank(MemberLevel level) {
+        return switch (level) {
+            case BRONZE -> 1;
+            case SILVER -> 2;
+            case GOLD   -> 3;
+        };
+    }
+
     private PromotionDto.Response mapToDto(Promotion p) {
         return PromotionDto.Response.builder()
                 .id(p.getId())
@@ -87,6 +108,7 @@ public class PromotionService {
                 .imageUrl(p.getImageUrl())
                 .discountType(p.getDiscountType())
                 .discountValue(p.getDiscountValue())
+                .requiredLevel(p.getRequiredLevel())
                 .build();
     }
 }
