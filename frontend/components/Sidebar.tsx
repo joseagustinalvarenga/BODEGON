@@ -134,6 +134,19 @@ export default function Sidebar({ variant }: SidebarProps) {
                 })}
             </nav>
 
+            {/* Dev watermark */}
+            <div style={{ padding: '10px 20px 0', textAlign: 'center' }}>
+                <div style={{ fontSize: 9, color: 'var(--text-muted)', letterSpacing: '0.06em', marginBottom: 6, textTransform: 'uppercase', opacity: 0.5 }}>
+                    Desarrollado por
+                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    src="/alvarenga-systems.png"
+                    alt="Alvarenga Systems"
+                    style={{ width: 120, height: 'auto', opacity: 0.35, filter: 'grayscale(30%)', display: 'block', margin: '0 auto' }}
+                />
+            </div>
+
             {/* Logout */}
             <div style={{ padding: '16px 12px', borderTop: '1px solid var(--border-card)' }}>
                 {variant === 'member' && isAdmin() && (
