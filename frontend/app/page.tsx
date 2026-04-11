@@ -95,6 +95,18 @@ export default function LandingPage() {
     return () => clearInterval(t);
   }, [nextSlide]);
 
+  // Animación del título cada vez que cambia el slide
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      gsap.fromTo(
+        `.hero-slide:nth-child(${currentSlide + 1}) .hero-slide-text > *`,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.75, stagger: 0.16, ease: 'power3.out', clearProps: 'all' }
+      );
+    }, 80); // pequeño delay para que el slide ya esté visible
+    return () => clearTimeout(timer);
+  }, [currentSlide]);
+
   useGSAP(() => {
 
     // 1. Header slide down
