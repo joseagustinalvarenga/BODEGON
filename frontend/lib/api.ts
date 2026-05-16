@@ -77,9 +77,9 @@ export const authApi = {
     login: (data: AuthRequest) =>
         api.post<BackendAuthResponse>('/auth/login', data).then((r) => mapAuthResponse(r.data)),
     register: (data: RegisterRequest) => {
-        // Backend expects fullName (single field), not firstName/lastName
         const payload = {
-            fullName: `${data.firstName} ${data.lastName}`.trim(),
+            firstName: data.firstName,
+            lastName: data.lastName,
             email: data.email,
             password: data.password,
             phone: data.phone || undefined,

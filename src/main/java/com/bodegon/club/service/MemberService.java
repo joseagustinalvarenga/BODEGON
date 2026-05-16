@@ -125,9 +125,14 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public Optional<MemberDto.Response> findByDni(String dni) {
+        log.info("Searching for member with DNI: {}", dni);
         return userRepository.findByDni(dni)
-                .flatMap(user -> memberProfileRepository.findByUserId(user.getId())
-                        .map(profile -> mapToDto(user, profile)));
+                .map(user -> {
+                    log.info("User found: {}. Searching for profile...", user.getEmail());
+                    return memberProfileRepository.findByUserId(user.getId())
+                            .map(profile -> mapToDto(user, profile))
+                            .orElseThrow(() -> new RuntimeException("User found but profile missing for DNI: " + dni));
+                });
     }
 
     @Transactional
