@@ -53,7 +53,12 @@ class AdminIntegrationTest {
 
         // 1. Registrar usuario admin y cambiar rol a ADMIN
         String adminEmail = "admin_" + ts + "@test.com";
-        authService.register(new RegisterRequest("Admin Test", adminEmail, "Admin1234", null));
+        authService.register(RegisterRequest.builder()
+                .firstName("Admin")
+                .lastName("Test")
+                .email(adminEmail)
+                .password("Admin1234")
+                .build());
         var adminUser = userRepository.findByEmail(adminEmail).orElseThrow();
         adminUser.setRole(Role.ADMIN);
         userRepository.save(adminUser);
@@ -63,7 +68,12 @@ class AdminIntegrationTest {
 
         // 2. Registrar miembro normal
         String memberEmail = "member_" + ts + "@test.com";
-        var memberAuth = authService.register(new RegisterRequest("Member Test", memberEmail, "Member1234", null));
+        var memberAuth = authService.register(RegisterRequest.builder()
+                .firstName("Member")
+                .lastName("Test")
+                .email(memberEmail)
+                .password("Member1234")
+                .build());
         memberToken = "Bearer " + memberAuth.getAccessToken();
         UUID memberUserId = userRepository.findByEmail(memberEmail).orElseThrow().getId();
         memberId = memberProfileRepository.findByUserId(memberUserId).orElseThrow().getId().toString();

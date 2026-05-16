@@ -53,14 +53,24 @@ class MemberIntegrationTest {
 
         // Registrar miembro
         String memberEmail = "miembro_" + ts + "@test.com";
-        var memberAuth = authService.register(new RegisterRequest("Juan Pérez", memberEmail, "Miembro1234", null));
+        var memberAuth = authService.register(RegisterRequest.builder()
+                .firstName("Juan")
+                .lastName("Pérez")
+                .email(memberEmail)
+                .password("Miembro1234")
+                .build());
         memberToken = "Bearer " + memberAuth.getAccessToken();
         memberUserId = userRepository.findByEmail(memberEmail).orElseThrow().getId();
         memberProfileId = memberProfileRepository.findByUserId(memberUserId).orElseThrow().getId();
 
         // Crear admin para poder dar puntos en los tests
         String adminEmail = "admin_aux_" + ts + "@test.com";
-        authService.register(new RegisterRequest("Admin Aux", adminEmail, "Admin1234", null));
+        authService.register(RegisterRequest.builder()
+                .firstName("Admin")
+                .lastName("Aux")
+                .email(adminEmail)
+                .password("Admin1234")
+                .build());
         var adminUser = userRepository.findByEmail(adminEmail).orElseThrow();
         adminUser.setRole(Role.ADMIN);
         userRepository.save(adminUser);

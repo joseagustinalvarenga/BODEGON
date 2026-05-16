@@ -39,7 +39,13 @@ class AuthIntegrationTest {
 
     @Test
     void shouldRegisterAndLoginUser() throws Exception {
-        RegisterRequest registerRequest = new RegisterRequest("Test User", "test@test.com", "password123", "12345678");
+        RegisterRequest registerRequest = RegisterRequest.builder()
+                .firstName("Test")
+                .lastName("User")
+                .email("test@test.com")
+                .password("password123")
+                .phone("12345678")
+                .build();
 
         mockMvc.perform(post("/api/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)

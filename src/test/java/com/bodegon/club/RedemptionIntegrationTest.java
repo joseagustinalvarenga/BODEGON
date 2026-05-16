@@ -68,7 +68,12 @@ class RedemptionIntegrationTest {
     void shouldRedeemRewardSuccessfully() throws Exception {
         // 1. Register User
         String email = "redeemer" + System.currentTimeMillis() + "@test.com";
-        AuthenticationResponse auth = authService.register(new RegisterRequest("Redeemer", email, "pass123", null));
+        AuthenticationResponse auth = authService.register(RegisterRequest.builder()
+                .firstName("Redeemer")
+                .lastName("User")
+                .email(email)
+                .password("pass123")
+                .build());
         userToken = "Bearer " + auth.getAccessToken();
 
         // 2. Create Reward (as Admin logic - but calling service directly for setup)
