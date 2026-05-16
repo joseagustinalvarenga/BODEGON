@@ -127,8 +127,9 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public Optional<MemberDto.Response> findByDni(String dni) {
-        log.info("Searching for member with DNI: {}", dni);
-        return userRepository.findByDni(dni)
+        String trimmedDni = dni != null ? dni.trim() : "";
+        log.info("Searching for member with DNI: {}", trimmedDni);
+        return userRepository.findByDni(trimmedDni)
                 .map(user -> {
                     log.info("User found: {}. Searching for profile...", user.getEmail());
                     return memberProfileRepository.findByUserId(user.getId())
@@ -181,11 +182,17 @@ public class MemberService {
                     .orElseThrow(() -> new RuntimeException("Profile not found"));
         }
 
+        // Increment visits
+        profile.setTotalVisits(profile.getTotalVisits() + 1);
+
         int points = (int) Math.floor(request.getAmount() * pointsRatePurchase);
         if (points > 0) {
             pointsService.earnPoints(profile.getId(), points, TransactionSource.PURCHASE,
                     "Compra $" + request.getAmount(), admin);
             profile = memberProfileRepository.findById(profile.getId()).orElseThrow();
+        } else {
+            // If no points, we still need to save the visits increment
+            memberProfileRepository.save(profile);
         }
 
         return AdminDto.PurchaseResponse.builder()
