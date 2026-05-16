@@ -23,6 +23,7 @@ public class PromotionService {
 
     private final PromotionRepository promotionRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
     /**
      * @param memberLevel null = usuario no autenticado (solo ve PUBLIC sin restricción de nivel)
@@ -60,7 +61,13 @@ public class PromotionService {
                 .createdBy(admin)
                 .build();
 
-        return mapToDto(promotionRepository.save(promotion));
+        promotion = promotionRepository.save(promotion);
+
+        // Send emails to all users
+        List<User> allUsers = userRepository.findAll();
+        emailService.sendPromotionEmailToAll(allUsers, promotion);
+
+        return mapToDto(promotion);
     }
 
     @Transactional
