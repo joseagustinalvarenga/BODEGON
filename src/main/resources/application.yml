@@ -5,7 +5,7 @@ spring:
   application:
     name: club-backend
   profiles:
-    active: local
+    active: ${SPRING_PROFILES_ACTIVE:local}
   jpa:
     open-in-view: false
     hibernate:
