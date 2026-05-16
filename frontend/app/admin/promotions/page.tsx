@@ -18,6 +18,15 @@ export default function AdminPromotionsPage() {
         return `${p.discountValue}x pts`;
     };
 
+    const formatDay = (day?: string) => {
+        if (!day) return 'Todos los días';
+        const days: Record<string, string> = {
+            MONDAY: 'Lunes', TUESDAY: 'Martes', WEDNESDAY: 'Miércoles',
+            THURSDAY: 'Jueves', FRIDAY: 'Viernes', SATURDAY: 'Sábado', SUNDAY: 'Domingo'
+        };
+        return days[day] || day;
+    };
+
     return (
         <div className="page-container fade-in" style={{ padding: 32 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
@@ -42,6 +51,7 @@ export default function AdminPromotionsPage() {
                                 <th>Descuento</th>
                                 <th>Acceso</th>
                                 <th>Nivel mínimo</th>
+                                <th>Recurrencia</th>
                                 <th>Vence</th>
                                 <th>Estado</th>
                                 <th></th>
@@ -75,6 +85,9 @@ export default function AdminPromotionsPage() {
                                                     {p.requiredLevel === 'BRONZE' ? '🥉 Bronce+' : p.requiredLevel === 'SILVER' ? '🥈 Plata+' : '🥇 Oro'}
                                                 </span>
                                             ) : <span style={{ color: 'var(--text-muted)' }}>Todos</span>}
+                                        </td>
+                                        <td style={{ fontSize: 12, fontWeight: p.dayOfWeek ? 700 : 400, color: p.dayOfWeek ? 'var(--green-primary)' : 'var(--text-muted)' }}>
+                                            {formatDay(p.dayOfWeek)}
                                         </td>
                                         <td style={{ color: 'var(--text-muted)', fontSize: 12 }}>
                                             {new Date(p.endAt).toLocaleDateString('es-AR')}
