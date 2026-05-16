@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Comercial — Club del Bodegón</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #faf8f4;
+            color: #2c2318;
+            line-height: 1.7;
+        }
+
+        /* ── COVER ── */
+        .cover {
+            background: #1a1208;
+            color: #ede0c8;
+            padding: 70px 60px 60px;
+            border-bottom: 4px solid #c9a84c;
+            position: relative;
+            overflow: hidden;
+        }
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cover-eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #c9a84c;
+            margin-bottom: 18px;
+            font-family: 'Inter', sans-serif;
+        }
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #ede0c8;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        .cover-sub {
+            font-size: 16px;
+            color: #9c8c74;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+        .cover-badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .cover-badge {
+            background: rgba(201,168,76,0.12);
+            border: 1px solid rgba(201,168,76,0.3);
+            color: #c9a84c;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+        }
+
+        /* ── LAYOUT ── */
+        .content {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 50px 40px 80px;
+        }
+
+        /* ── SECTION HEADER ── */
+        .section {
+            margin: 56px 0 28px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #e8dfc8;
+        }
+        .section-tag {
+            background: #1a1208;
+            color: #c9a84c;
+            font-size: 11px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1208;
+        }
+
+        /* ── CARDS ── */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin: 20px 0;
+        }
+        .card-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin: 20px 0;
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #ddd0b8;
+            border-radius: 10px;
+            padding: 22px;
+            border-top: 3px solid #c9a84c;
+        }
+        .card-icon {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1208;
+            margin-bottom: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+        .card p {
+            font-size: 13px;
+            color: #5c5044;
+            line-height: 1.6;
+        }
+
+        /* ── FEATURE LIST ── */
+        .feature-block {
+            background: #fff;
+            border: 1px solid #ddd0b8;
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+        }
+        .feature-block h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1208;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feature-block h3 span.icon {
+            font-size: 18px;
+        }
+        .feature-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 20px;
+        }
+        .feature-list li {
+            font-size: 13px;
+            color: #4a3e30;
+            padding-left: 16px;
+            position: relative;
+        }
+        .feature-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #c9a84c;
+            font-size: 9px;
+            top: 4px;
+        }
+
+        /* ── PRICING ── */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 24px 0;
+        }
+        .pricing-card {
+            background: #fff;
+            border: 1px solid #ddd0b8;
+            border-radius: 12px;
+            padding: 30px;
+            position: relative;
+        }
+        .pricing-card.featured {
+            background: #1a1208;
+            border-color: #c9a84c;
+            border-width: 2px;
+        }
+        .pricing-label {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #9c8c74;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .pricing-card.featured .pricing-label { color: #c9a84c; }
+        .pricing-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a1208;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .pricing-card.featured .pricing-amount { color: #ede0c8; }
+        .pricing-currency {
+            font-size: 18px;
+            font-weight: 400;
+            vertical-align: super;
+        }
+        .pricing-period {
+            font-size: 13px;
+            color: #9c8c74;
+            margin-bottom: 18px;
+        }
+        .pricing-card.featured .pricing-period { color: #6b5c48; }
+        .pricing-desc {
+            font-size: 13px;
+            color: #5c5044;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+        .pricing-card.featured .pricing-desc { color: #9c8c74; }
+        .pricing-includes {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .pricing-includes li {
+            font-size: 13px;
+            color: #4a3e30;
+            padding-left: 20px;
+            position: relative;
+        }
+        .pricing-card.featured .pricing-includes li { color: #9c8c74; }
+        .pricing-includes li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #c9a84c;
+            font-weight: 700;
+        }
+
+        /* ── ROI TABLE ── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            margin: 16px 0;
+        }
+        thead tr { background: #1a1208; color: #ede0c8; }
+        thead th {
+            padding: 10px 16px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        tbody tr:nth-child(even) { background: #f5f0e8; }
+        tbody td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #e8dfc8;
+            color: #2c2318;
+        }
+        .highlight-row td {
+            color: #1a1208;
+            font-weight: 700;
+            background: #fef9ec !important;
+            border-top: 2px solid #c9a84c;
+        }
+
+        /* ── QUOTE BOX ── */
+        .quote {
+            background: #1a1208;
+            border-left: 4px solid #c9a84c;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 24px 0;
+            color: #ede0c8;
+            font-style: italic;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .quote cite {
+            display: block;
+            font-size: 12px;
+            color: #c9a84c;
+            font-style: normal;
+            margin-top: 8px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        /* ── NOTE BOX ── */
+        .note {
+            background: #fef9ec;
+            border: 1px solid rgba(201,168,76,0.4);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-size: 13px;
+            color: #5c4a2a;
+            margin: 14px 0;
+        }
+        .note strong { color: #92400e; }
+
+        /* ── BENEFIT COMPARISON ── */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .comparison-col {
+            background: #fff;
+            border: 1px solid #ddd0b8;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .comparison-header {
+            padding: 14px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .comparison-header.business { background: #1a1208; color: #c9a84c; }
+        .comparison-header.client { background: #2d4a38; color: #7aaa8a; }
+        .comparison-body { padding: 16px 20px; }
+        .comparison-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #4a3e30;
+            align-items: flex-start;
+        }
+        .comparison-item .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+        .dot-gold { background: #c9a84c; }
+        .dot-green { background: #7aaa8a; }
+
+        /* ── TIMELINE ── */
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+            margin: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px; top: 8px; bottom: 8px;
+            width: 2px;
+            background: #e8dfc8;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px; top: 6px;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: #c9a84c;
+            border: 2px solid #faf8f4;
+        }
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1208;
+            margin-bottom: 4px;
+        }
+        .timeline-desc {
+            font-size: 13px;
+            color: #5c5044;
+        }
+
+        /* ── PRINT ── */
+        @media print {
+            .cover, thead tr, .pricing-card.featured { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+    <div class="cover-eyebrow">Propuesta Comercial Confidencial</div>
+    <h1>Sistema de Fidelización<br>Club del Bodegón</h1>
+    <div class="cover-sub">Solución digital completa para retener clientes y aumentar la frecuencia de visitas</div>
+    <div class="cover-badges">
+        <span class="cover-badge">Sistema Web Completo</span>
+        <span class="cover-badge">Panel Admin + App Cliente</span>
+        <span class="cover-badge">Base de Datos en la Nube</span>
+        <span class="cover-badge">Acceso desde cualquier dispositivo</span>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- EL PROBLEMA -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-tag">El contexto</span>
+            <h2>¿Por qué un club de fidelización?</h2>
+        </div>
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-icon">📉</div>
+                <div class="card-title">El cliente promedio no vuelve</div>
+                <p>Sin un incentivo concreto, entre el 60% y 70% de los clientes que visitaron un restaurante una sola vez no regresan. No por mala experiencia, sino por falta de motivo.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🧠</div>
+                <div class="card-title">No conocés a tu clientela</div>
+                <p>Sin datos, no sabés quiénes son tus clientes frecuentes, cuándo vienen, cuánto gastan, ni en qué fechas especiales podés impactarlos con una oferta.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💸</div>
+                <div class="card-title">Conseguir un cliente nuevo cuesta 5x más</div>
+                <p>Retener un cliente existente es entre 5 y 7 veces más económico que conseguir uno nuevo. La fidelización es la inversión con mayor retorno en gastronomía.</p>
+            </div>
+        </div>
+
+        <div class="quote">
+            "Un cliente fidelizado gasta en promedio un 67% más que uno nuevo, y tiene 5 veces más probabilidades de probar un producto nuevo del negocio."
+            <cite>— Harvard Business Review, estudio sobre retención en consumo masivo</cite>
+        </div>
+    </div>
+
+    <!-- QUÉ ES EL SISTEMA -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-tag">La solución</span>
+            <h2>¿Qué es el Club del Bodegón?</h2>
+        </div>
+        <p style="font-size: 15px; color: #4a3e30; margin-bottom: 24px; line-height: 1.8;">
+            Es un <strong>sistema digital de fidelización</strong> hecho a medida para el Bodegón. Permite registrar clientes, acumular puntos por sus compras, canjear recompensas y gestionar todo desde un panel de administración. Los clientes acceden desde su celular o computadora sin necesidad de instalar ninguna app.
+        </p>
+
+        <!-- FUNCIONES DEL SISTEMA -->
+        <div class="feature-block">
+            <h3><span class="icon">⚙️</span> Módulo de Administración (para el staff del Bodegón)</h3>
+            <ul class="feature-list">
+                <li>Registrar compras por DNI del cliente</li>
+                <li>Crear cliente nuevo desde la caja (DNI + nombre + email + fecha nac.)</li>
+                <li>Sumar o restar puntos manualmente</li>
+                <li>Ver lista completa de miembros con su nivel y puntos</li>
+                <li>Crear, editar y activar/desactivar recompensas</li>
+                <li>Validar códigos de canje en el local</li>
+                <li>Crear promociones públicas y exclusivas para miembros</li>
+                <li>Ver estadísticas: total de miembros, puntos en circulación</li>
+                <li>Configurar vigencia de recompensas por fecha (ej: diciembre)</li>
+                <li>Recompensas especiales por cumpleaños, mes de cumpleaños o día de la semana</li>
+            </ul>
+        </div>
+
+        <div class="feature-block">
+            <h3><span class="icon">👤</span> Módulo del Cliente (lo que ve el cliente)</h3>
+            <ul class="feature-list">
+                <li>Registro con email y contraseña</li>
+                <li>Ver su saldo de puntos en tiempo real</li>
+                <li>Consultar su nivel (Bronce, Plata, Oro)</li>
+                <li>Ver catálogo de recompensas disponibles</li>
+                <li>Canjear recompensas y recibir código único</li>
+                <li>Ver historial completo de transacciones</li>
+                <li>Ver historial de canjes y estado de cada uno</li>
+                <li>Ver promociones vigentes (públicas y exclusivas)</li>
+                <li>Actualizar datos de perfil y contraseña</li>
+                <li>Acceso desde celular, tablet o computadora</li>
+            </ul>
+        </div>
+
+        <div class="feature-block">
+            <h3><span class="icon">🏆</span> Sistema de Niveles y Puntos</h3>
+            <ul class="feature-list">
+                <li>3 niveles: Bronce, Plata y Oro</li>
+                <li>Puntos automáticos por compra (configurable)</li>
+                <li>El nivel sube automáticamente según puntos acumulados</li>
+                <li>Ajuste manual de puntos por parte del admin</li>
+                <li>Registro de cada movimiento de puntos con descripción</li>
+                <li>Recompensas con stock limitado o ilimitado</li>
+                <li>Recompensas con fecha de vencimiento</li>
+                <li>Código de canje único con vigencia configurable</li>
+                <li>Validación de código por el staff en el momento del canje</li>
+                <li>Notificación de nivel alcanzado (próximamente)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- BENEFICIOS -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-tag">Propuesta de valor</span>
+            <h2>Beneficios para el negocio y para el cliente</h2>
+        </div>
+
+        <div class="comparison">
+            <div class="comparison-col">
+                <div class="comparison-header business">Para el Bodegón</div>
+                <div class="comparison-body">
+                    <div class="comparison-item">
+                        <div class="dot dot-gold"></div>
+                        <div><strong>Mayor frecuencia de visitas:</strong> el cliente vuelve para acumular puntos y canjear recompensas.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-gold"></div>
+                        <div><strong>Base de datos propia:</strong> tenés los datos reales de tus clientes, cuánto gastan y con qué frecuencia vienen.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-gold"></div>
+                        <div><strong>Herramienta de marketing:</strong> podés crear promociones especiales por fecha, día de la semana o cumpleaños para mover días de poca demanda.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-gold"></div>
+                        <div><strong>Diferenciación competitiva:</strong> muy pocos bares y restaurantes de la zona tienen un sistema digital propio de fidelización.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-gold"></div>
+                        <div><strong>Control total:</strong> el admin puede ver en tiempo real cuántos puntos hay en circulación, qué recompensas se canjean más y quiénes son los mejores clientes.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-gold"></div>
+                        <div><strong>Costo de retención bajo:</strong> una recompensa (café, descuento) tiene un costo mínimo comparado con lo que genera en fidelidad y ticket promedio.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="comparison-col">
+                <div class="comparison-header client">Para el Cliente</div>
+                <div class="comparison-body">
+                    <div class="comparison-item">
+                        <div class="dot dot-green"></div>
+                        <div><strong>Reconocimiento:</strong> sentirse parte de un club exclusivo del Bodegón, no un cliente más.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-green"></div>
+                        <div><strong>Recompensas reales:</strong> cada peso que gasta le da un beneficio concreto y canjeable.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-green"></div>
+                        <div><strong>Sin fricciones:</strong> no necesita instalar nada. Accede desde el navegador de su celular con su email.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-green"></div>
+                        <div><strong>Sorpresas en fechas especiales:</strong> recompensas exclusivas en su cumpleaños o durante su mes.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-green"></div>
+                        <div><strong>Transparencia:</strong> puede ver exactamente cuántos puntos tiene, cómo los ganó y qué puede canjear.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="dot dot-green"></div>
+                        <div><strong>Acceso a promociones exclusivas:</strong> descuentos y beneficios que no están disponibles para el público general.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FUNCIONES FUTURAS -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-tag">Roadmap</span>
+            <h2>Funciones que puede tener el negocio (próximas versiones)</h2>
+        </div>
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-icon">📲</div>
+                <div class="card-title">Notificaciones por WhatsApp o Email</div>
+                <p>Avisar al cliente cuando sube de nivel, cuando tiene una recompensa por vencer, o cuando hay una promoción especial.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <div class="card-title">Reportes avanzados</div>
+                <p>Análisis de clientes por frecuencia, ticket promedio, días de mayor visita y segmentación por nivel para acciones de marketing dirigidas.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎂</div>
+                <div class="card-title">Campaña de cumpleaños automática</div>
+                <p>El sistema detecta los cumpleaños del mes y activa automáticamente la recompensa para esos clientes sin intervención del admin.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤝</div>
+                <div class="card-title">Programa de referidos</div>
+                <p>El cliente gana puntos por cada amigo que registra en el club. Crecimiento orgánico de la base de clientes.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <div class="card-title">App móvil nativa</div>
+                <p>Versión instalable para Android e iOS con notificaciones push, acceso rápido al código QR y experiencia optimizada.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔗</div>
+                <div class="card-title">Integración con punto de venta</div>
+                <p>Conexión con el sistema de caja para que los puntos se acrediten automáticamente al momento del pago, sin intervención manual.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PLAN DE PAGO -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-tag">Inversión</span>
+            <h2>Plan de precios recomendado</h2>
+        </div>
+
+        <p style="font-size: 14px; color: #5c5044; margin-bottom: 24px;">
+            La estructura de precios está pensada para que el negocio acceda al sistema con una inversión inicial accesible y luego un canon mensual que cubre el mantenimiento, el hosting, las actualizaciones y el soporte técnico.
+        </p>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-label">Pago único inicial</div>
+                <div class="pricing-amount"><span class="pricing-currency">$</span>500.000</div>
+                <div class="pricing-period">pesos argentinos — pago al inicio</div>
+                <div class="pricing-desc">Cubre el desarrollo, configuración del sistema, puesta en producción y capacitación del staff.</div>
+                <ul class="pricing-includes">
+                    <li>Sistema completo configurado y funcionando</li>
+                    <li>Panel admin personalizado para el Bodegón</li>
+                    <li>Base de datos en la nube (Render)</li>
+                    <li>Capacitación presencial al staff (2hs)</li>
+                    <li>Manual de uso del sistema</li>
+                    <li>Primer mes de soporte incluido</li>
+                </ul>
+            </div>
+            <div class="pricing-card featured">
+                <div class="pricing-label">Canon mensual</div>
+                <div class="pricing-amount"><span class="pricing-currency">$</span>90.000</div>
+                <div class="pricing-period">pesos argentinos — desde el segundo mes</div>
+                <div class="pricing-desc">Cubre todo lo necesario para que el sistema funcione sin interrupciones mes a mes.</div>
+                <ul class="pricing-includes">
+                    <li>Hosting y base de datos en la nube</li>
+                    <li>Actualizaciones y mejoras del sistema</li>
+                    <li>Soporte técnico por WhatsApp (días hábiles)</li>
+                    <li>Backup automático de datos</li>
+                    <li>Corrección de errores sin costo adicional</li>
+                    <li>1 nueva función menor por trimestre incluida</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="note">
+            <strong>Nota sobre el hosting:</strong> El plan actual usa servidores gratuitos (Render free tier). Si el negocio crece y necesita mayor velocidad y disponibilidad garantizada (uptime 99.9%), se puede migrar a un plan de producción por aprox. USD 14/mes adicionales, lo cual se coordina en conjunto.
+        </div>
+    </div>
+
+    <!-- ROI -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-tag">Retorno de inversión</span>
+            <h2>¿Cuándo se paga solo el sistema?</h2>
+        </div>
+
+        <p style="font-size: 14px; color: #5c5044; margin-bottom: 20px;">
+            Si el sistema logra que solo <strong>10 clientes por mes</strong> visiten el Bodegón una vez más de lo que lo harían sin el programa, el retorno es inmediato. Con un ticket promedio de <strong>$40.000 por persona</strong>, los números hablan solos.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Escenario</th>
+                    <th>Clientes adicionales/mes</th>
+                    <th>Ticket promedio</th>
+                    <th>Ingreso adicional/mes</th>
+                    <th>vs. Canon mensual</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Conservador</td>
+                    <td>15 visitas extra</td>
+                    <td>$40.000</td>
+                    <td>$600.000</td>
+                    <td style="color: #2d6a4f; font-weight: 600;">+$510.000 neto</td>
+                </tr>
+                <tr>
+                    <td>Moderado</td>
+                    <td>30 visitas extra</td>
+                    <td>$40.000</td>
+                    <td>$1.200.000</td>
+                    <td style="color: #2d6a4f; font-weight: 600;">+$1.110.000 neto</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>Realista (benchmark industria)</td>
+                    <td>50 visitas extra</td>
+                    <td>$40.000</td>
+                    <td>$2.000.000</td>
+                    <td style="color: #2d6a4f; font-weight: 600;">+$1.910.000 neto</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note">
+            Estudios en gastronomía muestran que un programa de puntos bien ejecutado aumenta la frecuencia de visita del cliente fidelizado entre un <strong>20% y 35%</strong> en el primer año.
+        </div>
+    </div>
+
+    <!-- IMPLEMENTACIÓN -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-tag">Implementación</span>
+            <h2>¿Cómo arrancamos?</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-title">Semana 1 — Configuración inicial</div>
+                <div class="timeline-desc">Se personaliza el sistema con los datos del Bodegón, se define la tasa de puntos, los niveles y las primeras recompensas. El sistema queda en producción.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">Semana 1 — Capacitación del staff</div>
+                <div class="timeline-desc">Sesión de 2 horas con el personal. Se explica cómo registrar compras por DNI, validar canjes y usar el panel admin. Se entrega manual impreso o digital.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">Semana 2 — Lanzamiento con clientes</div>
+                <div class="timeline-desc">Se comienza a registrar clientes en cada visita. Se puede imprimir un pequeño flyer o QR en las mesas para que se registren ellos mismos.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">Mes 1 — Seguimiento y ajustes</div>
+                <div class="timeline-desc">Se revisan los primeros datos: cuántos clientes se registraron, qué recompensas funcionan mejor, qué ajustes de puntos convienen. Soporte sin costo adicional.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">A partir del mes 2 — Operación normal</div>
+                <div class="timeline-desc">El sistema funciona de manera autónoma. El staff opera la carga de puntos y el admin gestiona recompensas y promociones según la estrategia del negocio.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CIERRE -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-tag">Resumen ejecutivo</span>
+            <h2>¿Por qué tomar la decisión ahora?</h2>
+        </div>
+        <div class="card-grid-2">
+            <div class="card">
+                <div class="card-icon">✅</div>
+                <div class="card-title">El sistema ya está construido y funcionando</div>
+                <p>No es una promesa ni un prototipo. Es un sistema en producción, accesible desde internet hoy mismo, con todas las funciones descritas en este documento.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔒</div>
+                <div class="card-title">Los datos son exclusivos del Bodegón</div>
+                <p>Todos los datos de clientes son propiedad del negocio. No se comparten con terceros. La base de datos es privada y con backup automático.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📈</div>
+                <div class="card-title">Inversión inicial equivale a ~1 mes de retorno</div>
+                <p>Con el escenario conservador, el pago inicial se recupera en menos de 3 meses de operación. Desde el mes 4 es ganancia neta.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤝</div>
+                <div class="card-title">Relación continua, no una venta única</div>
+                <p>El canon mensual garantiza soporte, mejoras constantes y una relación de largo plazo. El sistema crece con el negocio.</p>
+            </div>
+        </div>
+
+        <div class="quote" style="margin-top: 36px;">
+            La fidelización no es un gasto. Es la única inversión en marketing que garantiza que el dinero vuelve con el cliente.
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

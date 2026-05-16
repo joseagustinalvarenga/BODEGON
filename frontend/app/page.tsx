@@ -6,6 +6,7 @@ import type { Promotion } from '@/lib/types';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import AnimatedSplash from '@/components/AnimatedSplash';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -72,6 +73,7 @@ function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) {
 export default function LandingPage() {
   const [promos, setPromos]     = useState<Promotion[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showSplash, setShowSplash] = useState(true);
 
   const headerRef     = useRef<HTMLElement>(null);
   const imageCardsRef = useRef<HTMLElement>(null);
@@ -108,6 +110,7 @@ export default function LandingPage() {
   }, [currentSlide]);
 
   useGSAP(() => {
+    if (showSplash) return; // Wait for splash to finish
 
     // 1. Header slide down
     gsap.from(headerRef.current, { y: -60, opacity: 0, duration: 0.8, ease: 'power3.out' });
@@ -183,10 +186,21 @@ export default function LandingPage() {
       );
     });
 
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [showSplash] });
 
   return (
-    <div ref={containerRef} style={{ background: 'var(--bg-dark)', minHeight: '100vh' }}>
+    <>
+      {showSplash && <AnimatedSplash onComplete={() => setShowSplash(false)} />}
+      <div 
+        ref={containerRef} 
+        style={{ 
+          background: 'var(--bg-dark)', 
+          minHeight: '100vh',
+          visibility: showSplash ? 'hidden' : 'visible',
+          opacity: showSplash ? 0 : 1,
+          transition: 'opacity 0.5s ease'
+        }}
+      >
 
       {/* Header */}
       <header
@@ -372,5 +386,6 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
+    </>
   );
 }

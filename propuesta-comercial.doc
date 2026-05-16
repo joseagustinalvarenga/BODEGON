@@ -1,0 +1,554 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office'
+      xmlns:w='urn:schemas-microsoft-com:office:word'
+      xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="UTF-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content='Microsoft Word 15'>
+<title>Propuesta Comercial — Club del Bodegón</title>
+<!--[if gte mso 9]>
+<xml>
+  <w:WordDocument>
+    <w:View>Print</w:View>
+    <w:Zoom>100</w:Zoom>
+    <w:DoNotOptimizeForBrowser/>
+  </w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+  body {
+    font-family: Calibri, Arial, sans-serif;
+    font-size: 11pt;
+    color: #2c2318;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+  }
+  h1 { font-family: Georgia, serif; font-size: 28pt; font-weight: bold; color: #ede0c8; margin: 0 0 8pt; }
+  h2 { font-family: Georgia, serif; font-size: 16pt; font-weight: bold; color: #1a1208; margin: 0; }
+  h3 { font-family: Calibri, Arial, sans-serif; font-size: 11pt; font-weight: bold; color: #1a1208; margin: 0 0 8pt; }
+  p { margin: 0 0 8pt; font-size: 11pt; }
+  table { border-collapse: collapse; width: 100%; }
+  td, th { padding: 8pt 12pt; font-size: 10pt; }
+  ul { margin: 0; padding-left: 18pt; }
+  li { font-size: 10pt; color: #4a3e30; margin-bottom: 4pt; }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#1a1208; border-bottom:4pt solid #c9a84c; margin-bottom:0;">
+  <tr>
+    <td style="padding:50pt 50pt 40pt;">
+      <p style="font-size:9pt; letter-spacing:3pt; text-transform:uppercase; color:#c9a84c; margin-bottom:14pt;">Propuesta Comercial Confidencial</p>
+      <h1>Sistema de Fidelización<br>Club del Bodegón</h1>
+      <p style="font-size:12pt; color:#9c8c74; font-style:italic; margin-bottom:30pt;">Solución digital completa para retener clientes y aumentar la frecuencia de visitas</p>
+      <table cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="background-color:#2a1e0e; border:1pt solid #c9a84c; color:#c9a84c; padding:4pt 12pt; font-size:9pt; margin-right:8pt;">Sistema Web Completo</td>
+          <td width="8">&nbsp;</td>
+          <td style="background-color:#2a1e0e; border:1pt solid #c9a84c; color:#c9a84c; padding:4pt 12pt; font-size:9pt;">Panel Admin + App Cliente</td>
+          <td width="8">&nbsp;</td>
+          <td style="background-color:#2a1e0e; border:1pt solid #c9a84c; color:#c9a84c; padding:4pt 12pt; font-size:9pt;">Base de Datos en la Nube</td>
+          <td width="8">&nbsp;</td>
+          <td style="background-color:#2a1e0e; border:1pt solid #c9a84c; color:#c9a84c; padding:4pt 12pt; font-size:9pt;">Acceso desde cualquier dispositivo</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr>
+    <td style="padding:40pt 50pt 60pt;">
+
+      <!-- SECCIÓN 1: EL PROBLEMA -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10pt;">
+        <tr>
+          <td style="border-bottom:2pt solid #e8dfc8; padding-bottom:10pt;">
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="background-color:#1a1208; color:#c9a84c; font-size:8pt; font-weight:bold; letter-spacing:2pt; text-transform:uppercase; padding:3pt 10pt; border-radius:10pt;">El contexto</td>
+              <td width="12">&nbsp;</td>
+              <td><h2>¿Por qué un club de fidelización?</h2></td>
+            </tr></table>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="8" style="margin-bottom:16pt;">
+        <tr>
+          <td width="33%" valign="top" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:16pt;">
+            <p style="font-size:18pt; margin-bottom:6pt;">📉</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">El cliente promedio no vuelve</p>
+            <p style="font-size:10pt; color:#5c5044;">Sin un incentivo concreto, entre el 60% y 70% de los clientes que visitaron un restaurante una sola vez no regresan. No por mala experiencia, sino por falta de motivo.</p>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="33%" valign="top" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:16pt;">
+            <p style="font-size:18pt; margin-bottom:6pt;">🧠</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">No conocés a tu clientela</p>
+            <p style="font-size:10pt; color:#5c5044;">Sin datos, no sabés quiénes son tus clientes frecuentes, cuándo vienen, cuánto gastan, ni en qué fechas especiales podés impactarlos con una oferta.</p>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="33%" valign="top" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:16pt;">
+            <p style="font-size:18pt; margin-bottom:6pt;">💸</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">Conseguir un cliente nuevo cuesta 5x más</p>
+            <p style="font-size:10pt; color:#5c5044;">Retener un cliente existente es entre 5 y 7 veces más económico que conseguir uno nuevo. La fidelización es la inversión con mayor retorno en gastronomía.</p>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#1a1208; border-left:4pt solid #c9a84c; margin-bottom:32pt;">
+        <tr>
+          <td style="padding:16pt 20pt;">
+            <p style="font-style:italic; font-size:11pt; color:#ede0c8; margin-bottom:6pt;">"Un cliente fidelizado gasta en promedio un 67% más que uno nuevo, y tiene 5 veces más probabilidades de probar un producto nuevo del negocio."</p>
+            <p style="font-size:9pt; color:#c9a84c; text-transform:uppercase; letter-spacing:1pt; margin:0;">— Harvard Business Review, estudio sobre retención en consumo masivo</p>
+          </td>
+        </tr>
+      </table>
+
+      <!-- SECCIÓN 2: LA SOLUCIÓN -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10pt;">
+        <tr>
+          <td style="border-bottom:2pt solid #e8dfc8; padding-bottom:10pt;">
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="background-color:#1a1208; color:#c9a84c; font-size:8pt; font-weight:bold; letter-spacing:2pt; text-transform:uppercase; padding:3pt 10pt;">La solución</td>
+              <td width="12">&nbsp;</td>
+              <td><h2>¿Qué es el Club del Bodegón?</h2></td>
+            </tr></table>
+          </td>
+        </tr>
+      </table>
+
+      <p style="font-size:11pt; color:#4a3e30; margin-bottom:16pt; line-height:1.7;">
+        Es un <strong>sistema digital de fidelización</strong> hecho a medida para el Bodegón. Permite registrar clientes, acumular puntos por sus compras, canjear recompensas y gestionar todo desde un panel de administración. Los clientes acceden desde su celular o computadora sin necesidad de instalar ninguna app.
+      </p>
+
+      <!-- Feature Block: Admin -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#fff; border:1pt solid #ddd0b8; margin-bottom:12pt;">
+        <tr>
+          <td style="padding:18pt 22pt;">
+            <h3>⚙️ Módulo de Administración (para el staff del Bodegón)</h3>
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="50%" valign="top">
+                  <ul>
+                    <li>Registrar compras por DNI del cliente</li>
+                    <li>Crear cliente nuevo desde la caja (DNI + nombre + email + fecha nac.)</li>
+                    <li>Sumar o restar puntos manualmente</li>
+                    <li>Ver lista completa de miembros con su nivel y puntos</li>
+                    <li>Crear, editar y activar/desactivar recompensas</li>
+                  </ul>
+                </td>
+                <td width="50%" valign="top">
+                  <ul>
+                    <li>Validar códigos de canje en el local</li>
+                    <li>Crear promociones públicas y exclusivas para miembros</li>
+                    <li>Ver estadísticas: total de miembros, puntos en circulación</li>
+                    <li>Configurar vigencia de recompensas por fecha (ej: diciembre)</li>
+                    <li>Recompensas especiales por cumpleaños, mes de cumpleaños o día de la semana</li>
+                  </ul>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Feature Block: Cliente -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#fff; border:1pt solid #ddd0b8; margin-bottom:12pt;">
+        <tr>
+          <td style="padding:18pt 22pt;">
+            <h3>👤 Módulo del Cliente (lo que ve el cliente)</h3>
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="50%" valign="top">
+                  <ul>
+                    <li>Registro con email y contraseña</li>
+                    <li>Ver su saldo de puntos en tiempo real</li>
+                    <li>Consultar su nivel (Bronce, Plata, Oro)</li>
+                    <li>Ver catálogo de recompensas disponibles</li>
+                    <li>Canjear recompensas y recibir código único</li>
+                  </ul>
+                </td>
+                <td width="50%" valign="top">
+                  <ul>
+                    <li>Ver historial completo de transacciones</li>
+                    <li>Ver historial de canjes y estado de cada uno</li>
+                    <li>Ver promociones vigentes (públicas y exclusivas)</li>
+                    <li>Actualizar datos de perfil y contraseña</li>
+                    <li>Acceso desde celular, tablet o computadora</li>
+                  </ul>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Feature Block: Niveles -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#fff; border:1pt solid #ddd0b8; margin-bottom:32pt;">
+        <tr>
+          <td style="padding:18pt 22pt;">
+            <h3>🏆 Sistema de Niveles y Puntos</h3>
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="50%" valign="top">
+                  <ul>
+                    <li>3 niveles: Bronce, Plata y Oro</li>
+                    <li>Puntos automáticos por compra (configurable)</li>
+                    <li>El nivel sube automáticamente según puntos acumulados</li>
+                    <li>Ajuste manual de puntos por parte del admin</li>
+                    <li>Registro de cada movimiento de puntos con descripción</li>
+                  </ul>
+                </td>
+                <td width="50%" valign="top">
+                  <ul>
+                    <li>Recompensas con stock limitado o ilimitado</li>
+                    <li>Recompensas con fecha de vencimiento</li>
+                    <li>Código de canje único con vigencia configurable</li>
+                    <li>Validación de código por el staff en el momento del canje</li>
+                    <li>Notificación de nivel alcanzado (próximamente)</li>
+                  </ul>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <!-- SECCIÓN 3: BENEFICIOS -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10pt;">
+        <tr>
+          <td style="border-bottom:2pt solid #e8dfc8; padding-bottom:10pt;">
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="background-color:#1a1208; color:#c9a84c; font-size:8pt; font-weight:bold; letter-spacing:2pt; text-transform:uppercase; padding:3pt 10pt;">Propuesta de valor</td>
+              <td width="12">&nbsp;</td>
+              <td><h2>Beneficios para el negocio y para el cliente</h2></td>
+            </tr></table>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32pt;">
+        <tr valign="top">
+          <td width="49%" style="border:1pt solid #ddd0b8;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="background-color:#1a1208; color:#c9a84c; font-size:10pt; font-weight:bold; letter-spacing:1pt; text-transform:uppercase; padding:10pt 16pt;">Para el Bodegón</td>
+              </tr>
+              <tr>
+                <td style="padding:14pt 16pt;">
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Mayor frecuencia de visitas:</strong> el cliente vuelve para acumular puntos y canjear recompensas.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Base de datos propia:</strong> tenés los datos reales de tus clientes, cuánto gastan y con qué frecuencia vienen.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Herramienta de marketing:</strong> podés crear promociones especiales por fecha, día de la semana o cumpleaños para mover días de poca demanda.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Diferenciación competitiva:</strong> muy pocos bares y restaurantes de la zona tienen un sistema digital propio de fidelización.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Control total:</strong> el admin puede ver en tiempo real cuántos puntos hay en circulación, qué recompensas se canjean más y quiénes son los mejores clientes.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:0;"><strong>Costo de retención bajo:</strong> una recompensa (café, descuento) tiene un costo mínimo comparado con lo que genera en fidelidad y ticket promedio.</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="49%" style="border:1pt solid #ddd0b8;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="background-color:#2d4a38; color:#7aaa8a; font-size:10pt; font-weight:bold; letter-spacing:1pt; text-transform:uppercase; padding:10pt 16pt;">Para el Cliente</td>
+              </tr>
+              <tr>
+                <td style="padding:14pt 16pt;">
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Reconocimiento:</strong> sentirse parte de un club exclusivo del Bodegón, no un cliente más.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Recompensas reales:</strong> cada peso que gasta le da un beneficio concreto y canjeable.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Sin fricciones:</strong> no necesita instalar nada. Accede desde el navegador de su celular con su email.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Sorpresas en fechas especiales:</strong> recompensas exclusivas en su cumpleaños o durante su mes.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:10pt;"><strong>Transparencia:</strong> puede ver exactamente cuántos puntos tiene, cómo los ganó y qué puede canjear.</p>
+                  <p style="font-size:10pt; color:#4a3e30; margin-bottom:0;"><strong>Acceso a promociones exclusivas:</strong> descuentos y beneficios que no están disponibles para el público general.</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <!-- SECCIÓN 4: ROADMAP -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10pt;">
+        <tr>
+          <td style="border-bottom:2pt solid #e8dfc8; padding-bottom:10pt;">
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="background-color:#1a1208; color:#c9a84c; font-size:8pt; font-weight:bold; letter-spacing:2pt; text-transform:uppercase; padding:3pt 10pt;">Roadmap</td>
+              <td width="12">&nbsp;</td>
+              <td><h2>Funciones que puede tener el negocio (próximas versiones)</h2></td>
+            </tr></table>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="8" style="margin-bottom:32pt;">
+        <tr valign="top">
+          <td width="33%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:14pt;">
+            <p style="font-size:16pt; margin-bottom:6pt;">📲</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">Notificaciones por WhatsApp o Email</p>
+            <p style="font-size:10pt; color:#5c5044;">Avisar al cliente cuando sube de nivel, cuando tiene una recompensa por vencer, o cuando hay una promoción especial.</p>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="33%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:14pt;">
+            <p style="font-size:16pt; margin-bottom:6pt;">📊</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">Reportes avanzados</p>
+            <p style="font-size:10pt; color:#5c5044;">Análisis de clientes por frecuencia, ticket promedio, días de mayor visita y segmentación por nivel para acciones de marketing dirigidas.</p>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="33%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:14pt;">
+            <p style="font-size:16pt; margin-bottom:6pt;">🎂</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">Campaña de cumpleaños automática</p>
+            <p style="font-size:10pt; color:#5c5044;">El sistema detecta los cumpleaños del mes y activa automáticamente la recompensa para esos clientes sin intervención del admin.</p>
+          </td>
+        </tr>
+        <tr><td colspan="5" height="8">&nbsp;</td></tr>
+        <tr valign="top">
+          <td width="33%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:14pt;">
+            <p style="font-size:16pt; margin-bottom:6pt;">🤝</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">Programa de referidos</p>
+            <p style="font-size:10pt; color:#5c5044;">El cliente gana puntos por cada amigo que registra en el club. Crecimiento orgánico de la base de clientes.</p>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="33%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:14pt;">
+            <p style="font-size:16pt; margin-bottom:6pt;">📱</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">App móvil nativa</p>
+            <p style="font-size:10pt; color:#5c5044;">Versión instalable para Android e iOS con notificaciones push, acceso rápido al código QR y experiencia optimizada.</p>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="33%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:14pt;">
+            <p style="font-size:16pt; margin-bottom:6pt;">🔗</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">Integración con punto de venta</p>
+            <p style="font-size:10pt; color:#5c5044;">Conexión con el sistema de caja para que los puntos se acrediten automáticamente al momento del pago, sin intervención manual.</p>
+          </td>
+        </tr>
+      </table>
+
+      <!-- SECCIÓN 5: PRECIOS -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10pt;">
+        <tr>
+          <td style="border-bottom:2pt solid #e8dfc8; padding-bottom:10pt;">
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="background-color:#1a1208; color:#c9a84c; font-size:8pt; font-weight:bold; letter-spacing:2pt; text-transform:uppercase; padding:3pt 10pt;">Inversión</td>
+              <td width="12">&nbsp;</td>
+              <td><h2>Plan de precios recomendado</h2></td>
+            </tr></table>
+          </td>
+        </tr>
+      </table>
+
+      <p style="font-size:10pt; color:#5c5044; margin-bottom:16pt;">
+        La estructura de precios está pensada para que el negocio acceda al sistema con una inversión inicial accesible y luego un canon mensual que cubre el mantenimiento, el hosting, las actualizaciones y el soporte técnico.
+      </p>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12pt;">
+        <tr valign="top">
+          <td width="49%" style="background:#fff; border:1pt solid #ddd0b8; padding:24pt;">
+            <p style="font-size:9pt; letter-spacing:2pt; text-transform:uppercase; color:#9c8c74; margin-bottom:6pt;">Pago único inicial</p>
+            <p style="font-family:Georgia,serif; font-size:32pt; font-weight:bold; color:#1a1208; line-height:1; margin-bottom:4pt;">$350.000</p>
+            <p style="font-size:10pt; color:#9c8c74; margin-bottom:14pt;">pesos argentinos — pago al inicio</p>
+            <p style="font-size:10pt; color:#5c5044; margin-bottom:14pt;">Cubre el desarrollo, configuración del sistema, puesta en producción y capacitación del staff.</p>
+            <ul>
+              <li>Sistema completo configurado y funcionando</li>
+              <li>Panel admin personalizado para el Bodegón</li>
+              <li>Base de datos en la nube (Render)</li>
+              <li>Capacitación presencial al staff (2hs)</li>
+              <li>Manual de uso del sistema</li>
+              <li>Primer mes de soporte incluido</li>
+            </ul>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="49%" style="background:#1a1208; border:2pt solid #c9a84c; padding:24pt;">
+            <p style="font-size:9pt; letter-spacing:2pt; text-transform:uppercase; color:#c9a84c; margin-bottom:6pt;">Canon mensual</p>
+            <p style="font-family:Georgia,serif; font-size:32pt; font-weight:bold; color:#ede0c8; line-height:1; margin-bottom:4pt;">$45.000</p>
+            <p style="font-size:10pt; color:#6b5c48; margin-bottom:14pt;">pesos argentinos — desde el segundo mes</p>
+            <p style="font-size:10pt; color:#9c8c74; margin-bottom:14pt;">Cubre todo lo necesario para que el sistema funcione sin interrupciones mes a mes.</p>
+            <ul style="color:#9c8c74;">
+              <li style="color:#9c8c74;">Hosting y base de datos en la nube</li>
+              <li style="color:#9c8c74;">Actualizaciones y mejoras del sistema</li>
+              <li style="color:#9c8c74;">Soporte técnico por WhatsApp (días hábiles)</li>
+              <li style="color:#9c8c74;">Backup automático de datos</li>
+              <li style="color:#9c8c74;">Corrección de errores sin costo adicional</li>
+              <li style="color:#9c8c74;">1 nueva función menor por trimestre incluida</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fef9ec; border:1pt solid #c9a84c; margin-bottom:32pt;">
+        <tr>
+          <td style="padding:12pt 16pt; font-size:10pt; color:#5c4a2a;">
+            <strong style="color:#92400e;">Nota sobre el hosting:</strong> El plan actual usa servidores gratuitos (Render free tier). Si el negocio crece y necesita mayor velocidad y disponibilidad garantizada (uptime 99.9%), se puede migrar a un plan de producción por aprox. USD 14/mes adicionales, lo cual se coordina en conjunto.
+          </td>
+        </tr>
+      </table>
+
+      <!-- SECCIÓN 6: ROI -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10pt;">
+        <tr>
+          <td style="border-bottom:2pt solid #e8dfc8; padding-bottom:10pt;">
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="background-color:#1a1208; color:#c9a84c; font-size:8pt; font-weight:bold; letter-spacing:2pt; text-transform:uppercase; padding:3pt 10pt;">Retorno de inversión</td>
+              <td width="12">&nbsp;</td>
+              <td><h2>¿Cuándo se paga solo el sistema?</h2></td>
+            </tr></table>
+          </td>
+        </tr>
+      </table>
+
+      <p style="font-size:10pt; color:#5c5044; margin-bottom:14pt;">
+        Si el sistema logra que solo <strong>20 clientes por mes</strong> visiten el Bodegón una vez más de lo que lo harían sin el programa, el retorno es inmediato.
+      </p>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="border:1pt solid #ddd0b8; margin-bottom:12pt;">
+        <thead>
+          <tr style="background-color:#1a1208; color:#ede0c8;">
+            <th style="padding:8pt 14pt; text-align:left; font-size:9pt; letter-spacing:1pt; text-transform:uppercase; font-weight:500;">Escenario</th>
+            <th style="padding:8pt 14pt; text-align:left; font-size:9pt; letter-spacing:1pt; text-transform:uppercase; font-weight:500;">Clientes adicionales/mes</th>
+            <th style="padding:8pt 14pt; text-align:left; font-size:9pt; letter-spacing:1pt; text-transform:uppercase; font-weight:500;">Ticket promedio</th>
+            <th style="padding:8pt 14pt; text-align:left; font-size:9pt; letter-spacing:1pt; text-transform:uppercase; font-weight:500;">Ingreso adicional/mes</th>
+            <th style="padding:8pt 14pt; text-align:left; font-size:9pt; letter-spacing:1pt; text-transform:uppercase; font-weight:500;">vs. Canon mensual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt;">Conservador</td>
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt;">15 visitas extra</td>
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt;">$8.000</td>
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt;">$120.000</td>
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt; color:#2d6a4f; font-weight:bold;">+$75.000 neto</td>
+          </tr>
+          <tr style="background-color:#f5f0e8;">
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt;">Moderado</td>
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt;">30 visitas extra</td>
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt;">$8.000</td>
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt;">$240.000</td>
+            <td style="padding:8pt 14pt; border-bottom:1pt solid #e8dfc8; font-size:10pt; color:#2d6a4f; font-weight:bold;">+$195.000 neto</td>
+          </tr>
+          <tr style="background-color:#fef9ec;">
+            <td style="padding:8pt 14pt; border-bottom:2pt solid #c9a84c; font-size:10pt; font-weight:bold; color:#1a1208;">Realista (benchmark industria)</td>
+            <td style="padding:8pt 14pt; border-bottom:2pt solid #c9a84c; font-size:10pt; font-weight:bold; color:#1a1208;">50 visitas extra</td>
+            <td style="padding:8pt 14pt; border-bottom:2pt solid #c9a84c; font-size:10pt; font-weight:bold; color:#1a1208;">$8.000</td>
+            <td style="padding:8pt 14pt; border-bottom:2pt solid #c9a84c; font-size:10pt; font-weight:bold; color:#1a1208;">$400.000</td>
+            <td style="padding:8pt 14pt; border-bottom:2pt solid #c9a84c; font-size:10pt; color:#2d6a4f; font-weight:bold;">+$355.000 neto</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#fef9ec; border:1pt solid #c9a84c; margin-bottom:32pt;">
+        <tr>
+          <td style="padding:12pt 16pt; font-size:10pt; color:#5c4a2a;">
+            Estudios en gastronomía muestran que un programa de puntos bien ejecutado aumenta la frecuencia de visita del cliente fidelizado entre un <strong>20% y 35%</strong> en el primer año.
+          </td>
+        </tr>
+      </table>
+
+      <!-- SECCIÓN 7: IMPLEMENTACIÓN -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10pt;">
+        <tr>
+          <td style="border-bottom:2pt solid #e8dfc8; padding-bottom:10pt;">
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="background-color:#1a1208; color:#c9a84c; font-size:8pt; font-weight:bold; letter-spacing:2pt; text-transform:uppercase; padding:3pt 10pt;">Implementación</td>
+              <td width="12">&nbsp;</td>
+              <td><h2>¿Cómo arrancamos?</h2></td>
+            </tr></table>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32pt;">
+        <tr>
+          <td style="border-left:3pt solid #c9a84c; padding:0 0 0 20pt;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="padding-bottom:16pt;">
+                  <p style="font-size:10pt; font-weight:bold; color:#1a1208; margin-bottom:4pt;">● &nbsp; Semana 1 — Configuración inicial</p>
+                  <p style="font-size:10pt; color:#5c5044; margin:0;">Se personaliza el sistema con los datos del Bodegón, se define la tasa de puntos, los niveles y las primeras recompensas. El sistema queda en producción.</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-bottom:16pt;">
+                  <p style="font-size:10pt; font-weight:bold; color:#1a1208; margin-bottom:4pt;">● &nbsp; Semana 1 — Capacitación del staff</p>
+                  <p style="font-size:10pt; color:#5c5044; margin:0;">Sesión de 2 horas con el personal. Se explica cómo registrar compras por DNI, validar canjes y usar el panel admin. Se entrega manual impreso o digital.</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-bottom:16pt;">
+                  <p style="font-size:10pt; font-weight:bold; color:#1a1208; margin-bottom:4pt;">● &nbsp; Semana 2 — Lanzamiento con clientes</p>
+                  <p style="font-size:10pt; color:#5c5044; margin:0;">Se comienza a registrar clientes en cada visita. Se puede imprimir un pequeño flyer o QR en las mesas para que se registren ellos mismos.</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-bottom:16pt;">
+                  <p style="font-size:10pt; font-weight:bold; color:#1a1208; margin-bottom:4pt;">● &nbsp; Mes 1 — Seguimiento y ajustes</p>
+                  <p style="font-size:10pt; color:#5c5044; margin:0;">Se revisan los primeros datos: cuántos clientes se registraron, qué recompensas funcionan mejor, qué ajustes de puntos convienen. Soporte sin costo adicional.</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p style="font-size:10pt; font-weight:bold; color:#1a1208; margin-bottom:4pt;">● &nbsp; A partir del mes 2 — Operación normal</p>
+                  <p style="font-size:10pt; color:#5c5044; margin:0;">El sistema funciona de manera autónoma. El staff opera la carga de puntos y el admin gestiona recompensas y promociones según la estrategia del negocio.</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <!-- SECCIÓN 8: CIERRE -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10pt;">
+        <tr>
+          <td style="border-bottom:2pt solid #e8dfc8; padding-bottom:10pt;">
+            <table cellpadding="0" cellspacing="0"><tr>
+              <td style="background-color:#1a1208; color:#c9a84c; font-size:8pt; font-weight:bold; letter-spacing:2pt; text-transform:uppercase; padding:3pt 10pt;">Resumen ejecutivo</td>
+              <td width="12">&nbsp;</td>
+              <td><h2>¿Por qué tomar la decisión ahora?</h2></td>
+            </tr></table>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="8" style="margin-bottom:24pt;">
+        <tr valign="top">
+          <td width="49%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:16pt;">
+            <p style="font-size:18pt; margin-bottom:6pt;">✅</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">El sistema ya está construido y funcionando</p>
+            <p style="font-size:10pt; color:#5c5044;">No es una promesa ni un prototipo. Es un sistema en producción, accesible desde internet hoy mismo, con todas las funciones descritas en este documento.</p>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="49%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:16pt;">
+            <p style="font-size:18pt; margin-bottom:6pt;">🔒</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">Los datos son exclusivos del Bodegón</p>
+            <p style="font-size:10pt; color:#5c5044;">Todos los datos de clientes son propiedad del negocio. No se comparten con terceros. La base de datos es privada y con backup automático.</p>
+          </td>
+        </tr>
+        <tr><td colspan="3" height="8">&nbsp;</td></tr>
+        <tr valign="top">
+          <td width="49%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:16pt;">
+            <p style="font-size:18pt; margin-bottom:6pt;">📈</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">Inversión inicial equivale a ~1 mes de retorno</p>
+            <p style="font-size:10pt; color:#5c5044;">Con el escenario conservador, el pago inicial se recupera en menos de 3 meses de operación. Desde el mes 4 es ganancia neta.</p>
+          </td>
+          <td width="2%">&nbsp;</td>
+          <td width="49%" style="background:#fff; border:1pt solid #ddd0b8; border-top:3pt solid #c9a84c; padding:16pt;">
+            <p style="font-size:18pt; margin-bottom:6pt;">🤝</p>
+            <p style="font-weight:bold; font-size:10pt; color:#1a1208; margin-bottom:4pt;">Relación continua, no una venta única</p>
+            <p style="font-size:10pt; color:#5c5044;">El canon mensual garantiza soporte, mejoras constantes y una relación de largo plazo. El sistema crece con el negocio.</p>
+          </td>
+        </tr>
+      </table>
+
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="background-color:#1a1208; border-left:4pt solid #c9a84c; padding:18pt 22pt;">
+            <p style="font-style:italic; font-size:13pt; color:#ede0c8; margin:0;">La fidelización no es un gasto. Es la única inversión en marketing que garantiza que el dinero vuelve con el cliente.</p>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
