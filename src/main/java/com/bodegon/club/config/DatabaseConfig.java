@@ -24,10 +24,12 @@ public class DatabaseConfig {
     public HikariDataSource dataSource(DataSourceProperties properties) {
         String url = properties.getUrl();
         
-        // Handle Render/Heroku style postgres:// URLs
-        if (url != null && url.startsWith("postgres://")) {
-            log.info("Detected postgres:// protocol, converting to jdbc:postgresql://");
-            url = url.replace("postgres://", "jdbc:postgresql://");
+        // Handle Render/Heroku style postgres:// or postgresql:// URLs
+        if (url != null && (url.startsWith("postgres://") || url.startsWith("postgresql://"))) {
+            log.info("Detected postgres(ql):// protocol, converting to jdbc:postgresql://");
+            
+            // Regex to replace either postgres:// or postgresql:// with jdbc:postgresql://
+            url = url.replaceFirst("^postgresql?://", "jdbc:postgresql://");
             
             // Ensure sslmode is present for production
             if (!url.contains("sslmode")) {
@@ -35,6 +37,8 @@ public class DatabaseConfig {
             }
             properties.setUrl(url);
         }
+        
+        log.info("Final JDBC URL: {}", properties.getUrl());
         
         return properties.initializeDataSourceBuilder()
                 .type(HikariDataSource.class)
