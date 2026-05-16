@@ -15,26 +15,10 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: DB_HOST
+      - key: SPRING_DATASOURCE_URL
         fromDatabase:
           name: bodegon-db
-          property: host
-      - key: DB_PORT
-        fromDatabase:
-          name: bodegon-db
-          property: port
-      - key: DB_NAME
-        fromDatabase:
-          name: bodegon-db
-          property: database
-      - key: DB_USER
-        fromDatabase:
-          name: bodegon-db
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: bodegon-db
-          property: password
+          property: connectionString
       - key: JWT_SECRET
         generateValue: true
 
