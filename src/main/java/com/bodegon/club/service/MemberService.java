@@ -182,17 +182,16 @@ public class MemberService {
                     .orElseThrow(() -> new RuntimeException("Profile not found"));
         }
 
-        // Increment visits and save immediately
-        profile.setTotalVisits(profile.getTotalVisits() + 1);
-        profile = memberProfileRepository.save(profile);
+        // Increment visits atomically in DB
+        memberProfileRepository.incrementVisits(profile.getId());
 
         int points = (int) Math.floor(request.getAmount() * pointsRatePurchase);
         if (points > 0) {
             pointsService.earnPoints(profile.getId(), points, TransactionSource.PURCHASE,
                     "Compra $" + request.getAmount(), admin);
-            // Refresh profile to get the new points balance
-            profile = memberProfileRepository.findById(profile.getId()).orElseThrow();
         }
+        // Refresh profile to ensure we return the latest data (including incremented visits and points)
+        profile = memberProfileRepository.findById(profile.getId()).orElseThrow();
 
         return AdminDto.PurchaseResponse.builder()
                 .memberId(profile.getId())

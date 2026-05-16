@@ -17,4 +17,8 @@ public interface MemberProfileRepository extends JpaRepository<MemberProfile, UU
 
     @Query("SELECT COALESCE(SUM(m.currentPoints), 0) FROM MemberProfile m")
     long sumCurrentPoints();
+
+    @org.springframework.data.jpa.repository.Modifying
+    @Query("UPDATE MemberProfile m SET m.totalVisits = m.totalVisits + 1 WHERE m.id = :id")
+    void incrementVisits(java.util.UUID id);
 }
