@@ -17,6 +17,7 @@ export default function CreatePromotionPage() {
         endDate: '',
         memberOnly: false,
         requiredLevel: '',
+        dayOfWeek: '',
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -32,6 +33,7 @@ export default function CreatePromotionPage() {
                 discountType: form.discountType as 'PERCENTAGE' | 'FIXED' | 'POINTS_MULTIPLIER',
                 discountValue: parseFloat(form.discountValue),
                 requiredLevel: form.requiredLevel || undefined,
+                dayOfWeek: form.dayOfWeek || undefined,
             });
             toast.success('¡Promoción creada!');
             router.push('/admin/promotions');
@@ -172,17 +174,38 @@ export default function CreatePromotionPage() {
                     <div className="form-group" style={{ marginTop: 16 }}>
                         <label className="form-label">Nivel mínimo requerido</label>
                         <select
-                            className="form-input"
+                            className="input-field"
                             value={form.requiredLevel}
                             onChange={(e) => setForm({ ...form, requiredLevel: e.target.value })}
+                            style={{ cursor: 'pointer' }}
                         >
                             <option value="">Todos los niveles</option>
                             <option value="BRONZE">🥉 Bronce o superior</option>
                             <option value="SILVER">🥈 Plata o superior</option>
                             <option value="GOLD">🥇 Solo Oro</option>
                         </select>
+                    </div>
+
+                    {/* Día de la semana */}
+                    <div className="form-group" style={{ marginTop: 16 }}>
+                        <label className="form-label">Día de la semana (Promoción Recurrente)</label>
+                        <select
+                            className="input-field"
+                            value={form.dayOfWeek}
+                            onChange={(e) => setForm({ ...form, dayOfWeek: e.target.value })}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <option value="">Todos los días (Normal)</option>
+                            <option value="MONDAY">Lunes</option>
+                            <option value="TUESDAY">Martes</option>
+                            <option value="WEDNESDAY">Miércoles</option>
+                            <option value="THURSDAY">Jueves</option>
+                            <option value="FRIDAY">Viernes</option>
+                            <option value="SATURDAY">Sábado</option>
+                            <option value="SUNDAY">Domingo</option>
+                        </select>
                         <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>
-                            Solo los miembros con ese nivel o superior podrán ver esta promoción.
+                            Si seleccionás un día, la promoción solo aparecerá los días elegidos (dentro del rango de fechas).
                         </div>
                     </div>
 

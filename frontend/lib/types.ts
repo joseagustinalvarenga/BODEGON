@@ -106,6 +106,7 @@ export interface Promotion {
     active: boolean;
     imageUrl?: string;
     requiredLevel?: 'BRONZE' | 'SILVER' | 'GOLD' | null;
+    dayOfWeek?: 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY' | null;
 }
 
 // Redemptions
