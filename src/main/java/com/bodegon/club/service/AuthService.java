@@ -40,9 +40,10 @@ public class AuthService {
                 }
 
                 var user = User.builder()
-                                .fullName(request.getFullName())
+                                .fullName(request.getFirstName() + " " + request.getLastName())
                                 .email(request.getEmail())
                                 .phone(request.getPhone())
+                                .dni(request.getDni())
                                 .passwordHash(passwordEncoder.encode(request.getPassword()))
                                 .role(Role.MEMBER) // Default role
                                 .status(UserStatus.ACTIVE)
@@ -51,10 +52,18 @@ public class AuthService {
                 var savedUser = userRepository.save(user);
 
                 // Create Member Profile for Members
-                var profile = MemberProfile.builder()
-                                .user(savedUser)
-                                .build();
-                memberProfileRepository.save(profile);
+                var profileBuilder = MemberProfile.builder()
+                                .user(savedUser);
+
+                if (request.getBirthDate() != null && !request.getBirthDate().isBlank()) {
+                        try {
+                                profileBuilder.birthDate(java.time.LocalDate.parse(request.getBirthDate()));
+                        } catch (Exception e) {
+                                // Fallback or log if date format is invalid
+                        }
+                }
+
+                memberProfileRepository.save(profileBuilder.build());
 
                 // Authenticate implicitly (or just generate tokens)
                 // Here we just generate tokens for the new user
