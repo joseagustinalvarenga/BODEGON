@@ -59,4 +59,8 @@ public class Promotion extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "required_level")
     private MemberLevel requiredLevel;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "day_of_week")
+    private java.time.DayOfWeek dayOfWeek;
 }

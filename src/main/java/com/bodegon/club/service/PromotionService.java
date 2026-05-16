@@ -30,11 +30,12 @@ public class PromotionService {
      */
     public List<PromotionDto.Response> getAccessablePromotions(MemberLevel memberLevel) {
         LocalDateTime now = LocalDateTime.now();
+        java.time.DayOfWeek dayOfWeek = now.getDayOfWeek();
         List<Promotion> promotions;
         if (memberLevel != null) {
-            promotions = promotionRepository.findActivePromotions(now, null); // miembro: ve PUBLIC + MEMBERS_ONLY
+            promotions = promotionRepository.findActivePromotions(now, null, dayOfWeek); // miembro: ve PUBLIC + MEMBERS_ONLY
         } else {
-            promotions = promotionRepository.findActivePromotions(now, PromotionType.PUBLIC); // público: solo PUBLIC
+            promotions = promotionRepository.findActivePromotions(now, PromotionType.PUBLIC, dayOfWeek); // público: solo PUBLIC
         }
         return promotions.stream()
                 .filter(p -> p.getRequiredLevel() == null || isLevelSufficient(memberLevel, p.getRequiredLevel()))
@@ -58,6 +59,7 @@ public class PromotionService {
                 .discountType(request.getDiscountType())
                 .discountValue(request.getDiscountValue())
                 .requiredLevel(request.getRequiredLevel())
+                .dayOfWeek(request.getDayOfWeek())
                 .createdBy(admin)
                 .build();
 
@@ -83,6 +85,7 @@ public class PromotionService {
         promotion.setDiscountType(request.getDiscountType());
         promotion.setDiscountValue(request.getDiscountValue());
         promotion.setRequiredLevel(request.getRequiredLevel());
+        promotion.setDayOfWeek(request.getDayOfWeek());
         if (request.getImageUrl() != null) {
             promotion.setImageUrl(request.getImageUrl());
         }
@@ -116,6 +119,7 @@ public class PromotionService {
                 .discountType(p.getDiscountType())
                 .discountValue(p.getDiscountValue())
                 .requiredLevel(p.getRequiredLevel())
+                .dayOfWeek(p.getDayOfWeek())
                 .build();
     }
 }

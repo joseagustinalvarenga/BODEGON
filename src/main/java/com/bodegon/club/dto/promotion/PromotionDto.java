@@ -28,6 +28,7 @@ public class PromotionDto {
         private String discountType;
         private Double discountValue;
         private MemberLevel requiredLevel;
+        private java.time.DayOfWeek dayOfWeek;
     }
 
     @Data
@@ -46,5 +47,6 @@ public class PromotionDto {
         private String discountType;
         private Double discountValue;
         private MemberLevel requiredLevel;
+        private java.time.DayOfWeek dayOfWeek;
     }
 }
