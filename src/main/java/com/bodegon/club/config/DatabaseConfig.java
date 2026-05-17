@@ -25,18 +25,37 @@ public class DatabaseConfig {
     @ConfigurationProperties("spring.datasource.hikari")
     public HikariDataSource dataSource(DataSourceProperties properties) {
         String url = properties.getUrl();
+        log.info("DatabaseConfig: initial datasource URL is: {}", url != null ? maskUrl(url) : "null");
         
-        // Handle Render/Heroku style postgres(ql)://user:pass@host/db URLs
-        if (url != null && (url.startsWith("postgres://") || url.startsWith("postgresql://"))) {
+        // Handle Render/Heroku style postgres(ql)://user:pass@host/db URLs, even if prefixed with jdbc:
+        boolean isRenderUri = url != null && (
+                url.startsWith("postgres://") || 
+                url.startsWith("postgresql://") || 
+                (url.startsWith("jdbc:postgresql://") && url.contains("@")) ||
+                (url.startsWith("jdbc:postgres://") && url.contains("@"))
+        );
+
+        if (isRenderUri) {
             try {
-                log.info("Parsing database URI from Render...");
+                log.info("DatabaseConfig: parsing database URI from Render...");
                 
                 // Clean the prefix for URI parser
-                String cleanUri = url.replaceFirst("^jdbc:", ""); 
+                String cleanUri = url.replaceFirst("^jdbc:postgresql://", "postgresql://")
+                                     .replaceFirst("^jdbc:postgres://", "postgres://")
+                                     .replaceFirst("^jdbc:", "");
+                
                 URI dbUri = new URI(cleanUri);
 
-                String username = dbUri.getUserInfo().split(":")[0];
-                String password = dbUri.getUserInfo().split(":")[1];
+                String userInfo = dbUri.getUserInfo();
+                String username = null;
+                String password = null;
+                if (userInfo != null && userInfo.contains(":")) {
+                    String[] parts = userInfo.split(":", 2);
+                    username = parts[0];
+                    password = parts[1];
+                } else if (userInfo != null) {
+                    username = userInfo;
+                }
                 
                 // Build a clean JDBC URL: jdbc:postgresql://host:port/database
                 String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ":" + 
@@ -50,19 +69,30 @@ public class DatabaseConfig {
                     dbUrl += "&sslmode=require";
                 }
 
-                log.info("Extracted Host: {}, Database: {}, User: {}", dbUri.getHost(), dbUri.getPath(), username);
+                log.info("DatabaseConfig: successfully parsed URI. Host: {}, Database: {}, User: {}", 
+                         dbUri.getHost(), dbUri.getPath(), username);
                 
                 properties.setUrl(dbUrl);
-                properties.setUsername(username);
-                properties.setPassword(password);
+                if (username != null) properties.setUsername(username);
+                if (password != null) properties.setPassword(password);
                 
-            } catch (URISyntaxException | ArrayIndexOutOfBoundsException e) {
-                log.error("Failed to parse database URI: {}. Falling back to default configuration.", e.getMessage());
+            } catch (Exception e) {
+                log.error("DatabaseConfig: failed to parse database URI: {}. Falling back to default configuration.", e.getMessage(), e);
             }
+        } else {
+            log.info("DatabaseConfig: URL does not match Render URI pattern, skipping custom parsing.");
         }
+        
+        log.info("DatabaseConfig: initializing HikariDataSource with URL: {}", 
+                 properties.getUrl() != null ? maskUrl(properties.getUrl()) : "null");
         
         return properties.initializeDataSourceBuilder()
                 .type(HikariDataSource.class)
                 .build();
+    }
+
+    private String maskUrl(String url) {
+        // Simple masking of passwords in URLs for security logs
+        return url.replaceAll("(?<=://)[^/]+(?=@)", "***");
     }
 }
