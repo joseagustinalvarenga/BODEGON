@@ -53,7 +53,7 @@ public class EmailService {
     }
 
     private String buildPromotionHtml(User user, Promotion promotion) {
-        String discountInfo = promotion.getDiscountType().name().equals("PERCENTAGE") 
+        String discountInfo = "PERCENTAGE".equals(promotion.getDiscountType()) 
             ? promotion.getDiscountValue() + "% de descuento" 
             : "$" + promotion.getDiscountValue() + " de descuento";
 
