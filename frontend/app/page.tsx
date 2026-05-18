@@ -12,8 +12,8 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const heroSlides = [
   { video: '/videos/portada.mp4', image: '/images/hero1.png', title: 'Honrando La Mejor Comida',  subtitle: 'Cada plato es una experiencia. Vení a disfrutar y sumá puntos con cada visita.' },
-  { image: '/images/hero2.png', title: 'Sabores Que Te Enamoran',   subtitle: 'Empanadas, provoleta, asado… lo mejor de la cocina argentina te espera.' },
-  { image: '/images/hero3.png', title: 'El Asado Perfecto',          subtitle: 'Cortes premium a la parrilla. Una tradición que se vive en cada bocado.' },
+  { video: '/videos/portada2.mp4', image: '/images/hero2.png', title: 'Sabores Que Te Enamoran',   subtitle: 'Empanadas, provoleta, asado… lo mejor de la cocina argentina te espera.' },
+  { video: '/videos/portada3.mp4', image: '/images/hero3.png', title: 'El Asado Perfecto',          subtitle: 'Cortes premium a la parrilla. Una tradición que se vive en cada bocado.' },
 ];
 
 const imageCards = [
