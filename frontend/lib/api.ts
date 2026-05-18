@@ -42,13 +42,15 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-// On 401/403 with no body (expired/missing token) → clear auth and redirect to login
+// On 401/403 (expired/missing token, not login/register requests) → clear auth and redirect to login
 api.interceptors.response.use(
     (response) => response,
     (error) => {
         const status = error?.response?.status;
-        const hasBody = error?.response?.data && Object.keys(error.response.data).length > 0;
-        if ((status === 401 || status === 403) && !hasBody && typeof window !== 'undefined') {
+        const url = error?.config?.url || '';
+        const isAuthRequest = url.includes('/auth/login') || url.includes('/auth/register');
+        
+        if ((status === 401 || status === 403) && !isAuthRequest && typeof window !== 'undefined') {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('authUser');
