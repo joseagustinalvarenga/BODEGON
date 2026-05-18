@@ -11,7 +11,7 @@ import AnimatedSplash from '@/components/AnimatedSplash';
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const heroSlides = [
-  { image: '/images/hero1.png', title: 'Honrando La Mejor Comida',  subtitle: 'Cada plato es una experiencia. Vení a disfrutar y sumá puntos con cada visita.' },
+  { video: '/videos/portada.mp4', image: '/images/hero1.png', title: 'Honrando La Mejor Comida',  subtitle: 'Cada plato es una experiencia. Vení a disfrutar y sumá puntos con cada visita.' },
   { image: '/images/hero2.png', title: 'Sabores Que Te Enamoran',   subtitle: 'Empanadas, provoleta, asado… lo mejor de la cocina argentina te espera.' },
   { image: '/images/hero3.png', title: 'El Asado Perfecto',          subtitle: 'Cortes premium a la parrilla. Una tradición que se vive en cada bocado.' },
 ];
@@ -243,7 +243,11 @@ export default function LandingPage() {
       <section className="hero-slider">
         {heroSlides.map((slide, index) => (
           <div key={index} className={`hero-slide ${index === currentSlide ? 'active' : ''}`}>
-            <img src={slide.image} alt={slide.title} className="hero-slide-img" />
+            {slide.video ? (
+              <video src={slide.video} className="hero-slide-img" autoPlay loop muted playsInline style={{ objectFit: 'cover' }} />
+            ) : (
+              <img src={slide.image} alt={slide.title} className="hero-slide-img" />
+            )}
             <div className="hero-slide-overlay">
               <div className="hero-slide-text">
                 <h2>{slide.title}</h2>
