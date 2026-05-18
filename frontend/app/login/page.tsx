@@ -10,6 +10,9 @@ export default function LoginPage() {
     const { login } = useAuth();
     const [form, setForm] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
+    const [showForgotModal, setShowForgotModal] = useState(false);
+    const [forgotEmail, setForgotEmail] = useState('');
+    const [forgotLoading, setForgotLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,8 +28,18 @@ export default function LoginPage() {
                 router.push('/dashboard');
             }
         } catch (err: unknown) {
-            const error = err as { response?: { data?: { message?: string } }; message?: string };
-            toast.error(error?.response?.data?.message || error?.message || 'Error de conexión');
+            const error = err as { response?: { status?: number; data?: { message?: string } }; message?: string };
+            const msg = error?.response?.data?.message || error?.message || '';
+            if (
+                error?.response?.status === 401 ||
+                error?.response?.status === 403 ||
+                msg.toLowerCase().includes('bad credentials') ||
+                msg.toLowerCase().includes('unauthorized')
+            ) {
+                toast.error('❌ Contraseña incorrecta. Por favor, volvé a intentarlo.');
+            } else {
+                toast.error(msg || 'Error de conexión');
+            }
         } finally {
             setLoading(false);
         }
@@ -102,9 +115,23 @@ export default function LoginPage() {
                             />
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 20, marginTop: -8 }}>
-                            <a href="#" style={{ fontSize: 12, color: 'var(--green-primary)' }}>
+                            <button
+                                type="button"
+                                onClick={() => setShowForgotModal(true)}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    fontSize: 12,
+                                    color: 'var(--green-primary)',
+                                    cursor: 'pointer',
+                                    padding: 0,
+                                    fontFamily: 'inherit',
+                                    fontWeight: 500,
+                                    textDecoration: 'underline'
+                                }}
+                            >
                                 ¿Olvidaste tu contraseña?
-                            </a>
+                            </button>
                         </div>
                         <button className="btn-primary" type="submit" disabled={loading} style={{ width: '100%' }}>
                             {loading ? 'Ingresando...' : '→ Ingresar'}
@@ -145,6 +172,110 @@ export default function LoginPage() {
                     ))}
                 </div>
             </div>
+
+            {/* Forgot Password Modal */}
+            {showForgotModal && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        background: 'rgba(0, 0, 0, 0.75)',
+                        backdropFilter: 'blur(8px)',
+                        zIndex: 9999,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 20,
+                    }}
+                >
+                    <div
+                        className="card-glow"
+                        style={{
+                            maxWidth: 400,
+                            width: '100%',
+                            padding: 32,
+                            background: 'var(--bg-card)',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: 'var(--radius-lg)',
+                            position: 'relative',
+                        }}
+                    >
+                        <h3
+                            style={{
+                                fontSize: 20,
+                                fontWeight: 800,
+                                color: '#fff',
+                                marginBottom: 12,
+                            }}
+                        >
+                            Recuperar Contraseña
+                        </h3>
+                        <p
+                            style={{
+                                fontSize: 13,
+                                color: 'var(--text-secondary)',
+                                lineHeight: 1.5,
+                                marginBottom: 24,
+                            }}
+                        >
+                            Ingresá tu correo electrónico registrado y te enviaremos las instrucciones para restablecer tu contraseña.
+                        </p>
+
+                        <form
+                            onSubmit={async (e) => {
+                                e.preventDefault();
+                                if (!forgotEmail) return;
+                                setForgotLoading(true);
+                                // Simulate API delay
+                                await new Promise((r) => setTimeout(r, 1200));
+                                setForgotLoading(false);
+                                toast.success('¡Enlace enviado! Revisá tu correo electrónico (incluyendo spam).');
+                                setShowForgotModal(false);
+                                setForgotEmail('');
+                            }}
+                        >
+                            <div className="form-group" style={{ marginBottom: 24 }}>
+                                <label className="form-label" style={{ marginBottom: 8, display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>Correo electrónico</label>
+                                <input
+                                    className="input-field"
+                                    type="email"
+                                    placeholder="tu@email.com"
+                                    value={forgotEmail}
+                                    onChange={(e) => setForgotEmail(e.target.value)}
+                                    required
+                                    style={{ width: '100%' }}
+                                />
+                            </div>
+
+                            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+                                <button
+                                    type="button"
+                                    className="btn-ghost"
+                                    onClick={() => {
+                                        setShowForgotModal(false);
+                                        setForgotEmail('');
+                                    }}
+                                    disabled={forgotLoading}
+                                    style={{ padding: '10px 16px', fontSize: 13 }}
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn-primary"
+                                    disabled={forgotLoading}
+                                    style={{ padding: '10px 20px', fontSize: 13 }}
+                                >
+                                    {forgotLoading ? 'Enviando...' : 'Enviar Enlace'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
