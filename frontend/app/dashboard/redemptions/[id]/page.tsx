@@ -63,126 +63,181 @@ export default function RedemptionQRPage({ params }: { params: Promise<{ id: str
     const isValid = redemption.status === 'ISSUED' && !expired;
 
     return (
-        <div className="page-container fade-in" style={{ padding: 32, display: 'flex', justifyContent: 'center' }}>
-            <div style={{ maxWidth: 440, width: '100%' }}>
-                <Link href="/dashboard/redemptions">
-                    <button className="btn-ghost" style={{ marginBottom: 24, padding: '8px 16px', fontSize: 13 }}>
-                        ← Mis Canjes
-                    </button>
-                </Link>
+        <div style={{
+            minHeight: 'calc(100vh - 56px)',
+            background: 'var(--bg-dark)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px 16px',
+        }}>
+            <div style={{ maxWidth: 440, width: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {/* Back Link */}
+                <div style={{ textAlign: 'left' }}>
+                    <Link href="/dashboard/redemptions" style={{ color: 'var(--text-secondary)', fontSize: 13, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                        ← Volver a mis canjes
+                    </Link>
+                </div>
 
-                <div className="card-glow" style={{ textAlign: 'center', padding: '40px 32px' }}>
-                    {/* Status header */}
+                {/* Main ticket container */}
+                <div className="card-glow" style={{
+                    padding: '40px 24px 32px',
+                    textAlign: 'center',
+                    border: '2px solid rgba(201,168,76,0.4)',
+                    boxShadow: '0 0 35px rgba(201,168,76,0.15)',
+                    background: 'linear-gradient(180deg, #161210 0%, #0e0b09 100%)',
+                    borderRadius: 24,
+                    position: 'relative',
+                }}>
+                    {/* Big Banner */}
                     {isValid ? (
-                        <>
-                            <div style={{ fontSize: 32, marginBottom: 8 }}>✅</div>
-                            <h1 style={{ fontSize: 22, fontWeight: 800, color: 'var(--green-primary)', marginBottom: 4 }}>
-                                ¡Canje Listo!
-                            </h1>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginBottom: 28 }}>
-                                {redemption.rewardName}
+                        <div style={{
+                            background: 'rgba(201,168,76,0.12)',
+                            border: '2px solid rgba(201,168,76,0.3)',
+                            borderRadius: '16px',
+                            padding: '20px 16px',
+                            marginBottom: 28,
+                            boxShadow: '0 0 15px rgba(201,168,76,0.05)',
+                        }}>
+                            <h2 style={{
+                                fontSize: '20px',
+                                fontWeight: 900,
+                                color: '#c9a84c',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.05em',
+                                margin: '0 0 8px 0',
+                                lineHeight: 1.3
+                            }}>
+                                📣 ¡PEDILE AL MOZO QUE LO ESCANEE!
+                            </h2>
+                            <p style={{
+                                fontSize: '13px',
+                                color: 'var(--text-primary)',
+                                margin: 0,
+                                opacity: 0.9,
+                                lineHeight: 1.4
+                            }}>
+                                Mostrá este código en mesa para aplicar tu beneficio.
                             </p>
-                        </>
+                        </div>
                     ) : alreadyUsed ? (
-                        <>
-                            <div style={{ fontSize: 32, marginBottom: 8 }}>🎉</div>
-                            <h1 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-secondary)', marginBottom: 4 }}>
-                                Ya fue utilizado
-                            </h1>
-                            <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 28 }}>
-                                {redemption.rewardName}
+                        <div style={{
+                            background: 'rgba(122,170,138,0.08)',
+                            border: '1px solid rgba(122,170,138,0.2)',
+                            borderRadius: '16px',
+                            padding: '16px 12px',
+                            marginBottom: 28,
+                        }}>
+                            <h2 style={{
+                                fontSize: '18px',
+                                fontWeight: 800,
+                                color: 'var(--green-primary)',
+                                margin: 0,
+                            }}>
+                                🎉 BENEFICIO CANJEADO
+                            </h2>
+                            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '4px 0 0' }}>
+                                Este código ya fue procesado con éxito.
                             </p>
-                        </>
+                        </div>
                     ) : (
-                        <>
-                            <div style={{ fontSize: 32, marginBottom: 8 }}>⏰</div>
-                            <h1 style={{ fontSize: 22, fontWeight: 800, color: '#ef4444', marginBottom: 4 }}>
-                                Canje Vencido
-                            </h1>
-                            <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 28 }}>
-                                {redemption.rewardName}
+                        <div style={{
+                            background: 'rgba(239,68,68,0.08)',
+                            border: '1px solid rgba(239,68,68,0.2)',
+                            borderRadius: '16px',
+                            padding: '16px 12px',
+                            marginBottom: 28,
+                        }}>
+                            <h2 style={{
+                                fontSize: '18px',
+                                fontWeight: 800,
+                                color: '#ef4444',
+                                margin: 0,
+                            }}>
+                                ⏰ CANJE VENCIDO
+                            </h2>
+                            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '4px 0 0' }}>
+                                El límite de tiempo para usar este QR expiró.
                             </p>
-                        </>
+                        </div>
                     )}
 
-                    {/* QR Code */}
-                    <div
-                        style={{
-                            width: 240,
-                            height: 240,
-                            background: '#fff',
-                            borderRadius: 16,
-                            margin: '0 auto 24px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: 8,
-                            filter: (!isValid) ? 'grayscale(1) opacity(0.4)' : 'none',
-                            transition: 'filter 0.3s',
-                        }}
-                    >
+                    {/* Reward Name */}
+                    <div style={{ marginBottom: 28 }}>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>
+                            Beneficio Seleccionado
+                        </div>
+                        <h1 style={{
+                            fontSize: '24px',
+                            fontWeight: 800,
+                            color: '#fff',
+                            margin: 0,
+                            lineHeight: 1.3
+                        }}>
+                            {redemption.rewardName}
+                        </h1>
+                    </div>
+
+                    {/* QR Code Container (Larger) */}
+                    <div style={{
+                        width: 260,
+                        height: 260,
+                        background: '#fff',
+                        borderRadius: 20,
+                        margin: '0 auto 28px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 12,
+                        boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
+                        filter: (!isValid) ? 'grayscale(1) opacity(0.3)' : 'none',
+                        transition: 'filter 0.3s',
+                    }}>
                         {qrDataUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
                                 src={qrDataUrl}
                                 alt={`QR del canje ${redemption.code}`}
-                                style={{ width: '100%', height: '100%', borderRadius: 10 }}
+                                style={{ width: '100%', height: '100%', borderRadius: 12 }}
                             />
                         ) : (
-                            <div style={{ color: '#ccc', fontSize: 13 }}>Generando QR...</div>
+                            <div style={{ color: 'var(--text-muted)', fontSize: 13 }}>Generando QR...</div>
                         )}
                     </div>
 
-                    {/* Code */}
+                    {/* Code display */}
                     <div
                         style={{
                             background: 'var(--bg-input)',
                             border: '1px solid var(--border-color)',
-                            borderRadius: 'var(--radius-md)',
-                            padding: '12px 20px',
-                            marginBottom: 16,
+                            borderRadius: '12px',
+                            padding: '14px 20px',
+                            marginBottom: 28,
                             fontFamily: 'monospace',
-                            fontSize: 14,
-                            color: 'var(--green-primary)',
-                            letterSpacing: '0.1em',
+                            fontSize: 16,
+                            fontWeight: 700,
+                            color: '#c9a84c',
+                            letterSpacing: '0.12em',
                             wordBreak: 'break-all',
+                            boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.3)',
                         }}
                     >
                         {redemption.code}
                     </div>
 
-                    {/* Info */}
-                    <div style={{ marginBottom: 24, textAlign: 'left' }}>
+                    {/* Ticket details info */}
+                    <div style={{ textAlign: 'left', background: 'rgba(255,255,255,0.02)', borderRadius: 16, padding: '16px 20px', border: '1px solid rgba(255,255,255,0.04)' }}>
                         {[
-                            { label: 'Recompensa', val: redemption.rewardName },
-                            { label: 'Puntos usados', val: `-${redemption.pointsSpent} pts` },
+                            { label: 'Puntos usados', val: `${redemption.pointsSpent} pts` },
                             { label: 'Emitido el', val: formatDate(redemption.issuedAt) },
                             { label: 'Vence el', val: formatDate(redemption.expiresAt) },
                         ].map((d) => (
-                            <div key={d.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--border-card)' }}>
-                                <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>{d.label}</span>
-                                <span style={{ color: 'var(--text-primary)', fontWeight: 500, fontSize: 12 }}>{d.val}</span>
+                            <div key={d.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                                <span style={{ color: 'var(--text-secondary)', fontSize: 12 }}>{d.label}</span>
+                                <span style={{ color: '#fff', fontWeight: 600, fontSize: 12 }}>{d.val}</span>
                             </div>
                         ))}
                     </div>
-
-                    {isValid && (
-                        <div style={{
-                            background: 'rgba(201,168,76,0.08)',
-                            border: '1px solid rgba(201,168,76,0.2)',
-                            borderRadius: '12px',
-                            padding: '16px 20px',
-                            marginBottom: 24,
-                            textAlign: 'center'
-                        }}>
-                            <p style={{ fontSize: 16, fontWeight: 800, color: '#c9a84c', margin: '0 0 6px 0' }}>
-                                👉 ¡Pedile al mozo que lo escanee!
-                            </p>
-                            <p style={{ fontSize: 12, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.4 }}>
-                                Mostrá este código QR al personal de mesa para validar y aplicar tu recompensa.
-                            </p>
-                        </div>
-                    )}
 
                     {/* Hidden canvas for printing */}
                     <canvas ref={canvasRef} style={{ display: 'none' }} />
