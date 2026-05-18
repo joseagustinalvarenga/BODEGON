@@ -33,7 +33,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     if (!user) return null;
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh' }}>
+        <div className="dashboard-layout">
             <Sidebar variant="member" />
             <main style={{ flex: 1, overflow: 'auto', background: 'var(--bg-dark)', minWidth: 0 }}>
                 {children}

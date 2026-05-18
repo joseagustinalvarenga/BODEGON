@@ -25,7 +25,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh' }}>
+        <div className="dashboard-layout">
             <Sidebar variant="admin" />
             <main style={{ flex: 1, overflow: 'auto', background: 'var(--bg-dark)', minWidth: 0 }}>
                 {children}

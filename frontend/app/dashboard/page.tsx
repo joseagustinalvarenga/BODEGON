@@ -63,7 +63,7 @@ export default function DashboardPage() {
                     <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
                         Tus Puntos Actuales
                     </div>
-                    <div style={{ fontSize: 52, fontWeight: 800, color: 'var(--green-primary)', lineHeight: 1 }}>
+                    <div className="points-large-text" style={{ fontSize: 52, fontWeight: 800, color: 'var(--green-primary)', lineHeight: 1 }}>
                         {(profile?.currentPoints ?? 0).toLocaleString()}
                     </div>
                     <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 6 }}>puntos disponibles</div>

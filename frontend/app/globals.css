@@ -788,3 +788,45 @@ img {
 .pulse-glow {
   animation: pulse-glow 2s ease infinite;
 }
+
+/* Dashboard Layout and Responsiveness */
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+  
+  .page-container {
+    padding: 16px !important;
+  }
+  
+  .grid-stats {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  
+  .stat-card {
+    padding: 16px !important;
+  }
+  
+  .card, .card-glow {
+    padding: 16px !important;
+  }
+  
+  .table-wrapper {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .data-table {
+    min-width: 600px;
+  }
+  
+  .points-large-text {
+    font-size: clamp(36px, 10vw, 52px) !important;
+  }
+}
