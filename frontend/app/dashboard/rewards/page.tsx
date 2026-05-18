@@ -4,8 +4,10 @@ import { rewardApi, redemptionApi } from '@/lib/api';
 import type { Reward } from '@/lib/types';
 import toast from 'react-hot-toast';
 import { memberApi } from '@/lib/api';
+import { useRouter } from 'next/navigation';
 
 export default function RewardsPage() {
+    const router = useRouter();
     const [rewards, setRewards] = useState<Reward[]>([]);
     const [loading, setLoading] = useState(true);
     const [userPts, setUserPts] = useState(0);
@@ -28,9 +30,11 @@ export default function RewardsPage() {
         }
         setRedeeming(reward.id);
         try {
-            await redemptionApi.redeem(reward.id);
+            const res = await redemptionApi.redeem(reward.id);
             toast.success(`¡${reward.name} canjeado exitosamente!`);
             setUserPts((p) => p - reward.pointsCost);
+            // Redirect to the QR page
+            router.push(`/dashboard/redemptions/${res.id}`);
         } catch (err: unknown) {
             const e = err as { response?: { data?: { message?: string } } };
             toast.error(e?.response?.data?.message || 'Error al canjear');

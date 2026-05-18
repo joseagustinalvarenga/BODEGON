@@ -167,9 +167,21 @@ export default function RedemptionQRPage({ params }: { params: Promise<{ id: str
                     </div>
 
                     {isValid && (
-                        <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 20 }}>
-                            Mostrá este QR al personal del restaurante para validar tu recompensa.
-                        </p>
+                        <div style={{
+                            background: 'rgba(201,168,76,0.08)',
+                            border: '1px solid rgba(201,168,76,0.2)',
+                            borderRadius: '12px',
+                            padding: '16px 20px',
+                            marginBottom: 24,
+                            textAlign: 'center'
+                        }}>
+                            <p style={{ fontSize: 16, fontWeight: 800, color: '#c9a84c', margin: '0 0 6px 0' }}>
+                                👉 ¡Pedile al mozo que lo escanee!
+                            </p>
+                            <p style={{ fontSize: 12, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.4 }}>
+                                Mostrá este código QR al personal de mesa para validar y aplicar tu recompensa.
+                            </p>
+                        </div>
                     )}
 
                     {/* Hidden canvas for printing */}
