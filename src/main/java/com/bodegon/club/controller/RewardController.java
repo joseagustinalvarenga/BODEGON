@@ -31,6 +31,12 @@ public class RewardController {
         return ResponseEntity.ok(rewardService.getActiveRewards(level));
     }
 
+    /** Público: cualquiera puede ver todas las recompensas activas (para promocionar el club) */
+    @GetMapping("/public")
+    public ResponseEntity<List<RewardDto.Response>> getPublicActiveRewards() {
+        return ResponseEntity.ok(rewardService.getPublicActiveRewards());
+    }
+
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<RewardDto.Response>> getAllRewards() {

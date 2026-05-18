@@ -122,6 +122,7 @@ export const promotionApi = {
 
 // Rewards
 export const rewardApi = {
+    getPublic: () => api.get<Reward[]>('/rewards/public').then((r) => r.data),
     getAll: () => api.get<Reward[]>('/rewards').then((r) => r.data),
     getAllAdmin: () => api.get<Reward[]>('/rewards/all').then((r) => r.data),
     create: (data: Partial<Reward>) =>

@@ -28,6 +28,13 @@ public class RewardService {
                 .collect(Collectors.toList());
     }
 
+    /** Para el público general: todas las recompensas activas */
+    public List<RewardDto.Response> getPublicActiveRewards() {
+        return rewardRepository.findByActiveTrue().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
     /** Para el admin: todas */
     public List<RewardDto.Response> getAllRewards() {
         return rewardRepository.findAll().stream()

@@ -1,8 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { promotionApi } from '@/lib/api';
-import type { Promotion } from '@/lib/types';
+import { promotionApi, rewardApi } from '@/lib/api';
+import type { Promotion, Reward } from '@/lib/types';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -72,6 +72,7 @@ function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) {
 
 export default function LandingPage() {
   const [promos, setPromos]     = useState<Promotion[]>([]);
+  const [rewards, setRewards]   = useState<Reward[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showSplash, setShowSplash] = useState(true);
 
@@ -79,6 +80,7 @@ export default function LandingPage() {
   const imageCardsRef = useRef<HTMLElement>(null);
   const stepsRef      = useRef<HTMLDivElement>(null);
   const levelsRef     = useRef<HTMLDivElement>(null);
+  const rewardsRef    = useRef<HTMLDivElement>(null);
   const promosRef     = useRef<HTMLDivElement>(null);
   const ctaRef        = useRef<HTMLElement>(null);
   const ctaBgRef      = useRef<HTMLDivElement>(null);
@@ -86,6 +88,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     promotionApi.getPublic().then(setPromos).catch(() => {});
+    rewardApi.getPublic().then(setRewards).catch(() => {});
   }, []);
 
   const goToSlide = useCallback((i: number) => setCurrentSlide(i), []);
@@ -136,6 +139,12 @@ export default function LandingPage() {
     gsap.from('.level-card', {
       scrollTrigger: { trigger: levelsRef.current, start: 'top 80%' },
       y: 50, opacity: 0, duration: 0.75, stagger: 0.18, ease: 'power3.out',
+    });
+
+    // 5b. Reward cards
+    gsap.from('.reward-card', {
+      scrollTrigger: { trigger: rewardsRef.current, start: 'top 82%' },
+      y: 40, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out',
     });
 
     // 6. Promo cards
@@ -219,6 +228,7 @@ export default function LandingPage() {
         </Link>
         <nav className="landing-nav" style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
           <a href="#how-it-works" style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Cómo funciona</a>
+          <a href="#rewards" style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Beneficios y Canjes</a>
           <a href="#promos" style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Promociones</a>
           <Link href="/login"><button className="btn-ghost" style={{ padding: '8px 18px' }}>Ingresar</button></Link>
           <Link href="/register"><button className="btn-primary" style={{ padding: '8px 18px' }}>Unirme al Club</button></Link>
@@ -328,6 +338,119 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Recompensas / Canjes */}
+      {rewards.length > 0 && (
+        <section id="rewards" className="landing-section" style={{ padding: '100px 48px', background: 'var(--bg-dark)', borderTop: '1px solid var(--border-card)' }}>
+          <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+
+            <SectionTitle eyebrow="Catálogo de Canjes" title="Premios y Recompensas" />
+
+            <div ref={rewardsRef} className="rewards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
+              {rewards.map((reward) => (
+                <div
+                  key={reward.id}
+                  className="reward-card"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(13,11,9,0.8) 100%)',
+                    border: '1px solid rgba(201,168,76,0.12)',
+                    borderRadius: 12,
+                    padding: '36px 30px',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    minHeight: 220,
+                    transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-6px)';
+                    (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(201,168,76,0.4)';
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = '0 12px 30px rgba(201,168,76,0.08)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)';
+                    (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(201,168,76,0.12)';
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = 'none';
+                  }}
+                >
+                  <div style={{
+                    position: 'absolute',
+                    top: -40,
+                    right: -40,
+                    width: 120,
+                    height: 120,
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)',
+                    pointerEvents: 'none'
+                  }} />
+
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 48,
+                        height: 48,
+                        background: 'rgba(201,168,76,0.1)',
+                        border: '1px solid rgba(201,168,76,0.2)',
+                        borderRadius: 10,
+                        fontSize: 22
+                      }}>
+                        🎁
+                      </div>
+                      
+                      {reward.requiredLevel && (
+                        <span style={{
+                          fontSize: 11,
+                          fontWeight: 700,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.08em',
+                          padding: '4px 10px',
+                          borderRadius: 20,
+                          background: reward.requiredLevel === 'GOLD' ? 'rgba(251,191,36,0.15)' : reward.requiredLevel === 'SILVER' ? 'rgba(148,163,184,0.15)' : 'rgba(180,134,90,0.15)',
+                          color: reward.requiredLevel === 'GOLD' ? '#fbbf24' : reward.requiredLevel === 'SILVER' ? '#94a3b8' : '#b4865a',
+                          border: `1px solid ${reward.requiredLevel === 'GOLD' ? '#fbbf2430' : reward.requiredLevel === 'SILVER' ? '#94a3b830' : '#b4865a30'}`
+                        }}>
+                          Nivel {reward.requiredLevel}
+                        </span>
+                      )}
+                    </div>
+
+                    <h3 style={{ fontSize: 19, fontWeight: 800, color: '#fff', marginBottom: 8, fontFamily: "'Playfair Display', serif" }}>
+                      {reward.name}
+                    </h3>
+                    
+                    <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, marginBottom: 20 }}>
+                      {reward.description}
+                    </p>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 16 }}>
+                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
+                      Costo de canje
+                    </div>
+                    <div style={{
+                      fontSize: 18,
+                      fontWeight: 900,
+                      color: 'var(--green-primary)',
+                      fontFamily: 'monospace',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4
+                    }}>
+                      ⭐ {reward.pointsCost} <span style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.4)' }}>pts</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Promos */}
       {promos.length > 0 && (
         <section id="promos" className="landing-section" style={{ padding: '100px 48px', background: 'var(--bg-dark)', borderTop: '1px solid var(--border-card)' }}>
@@ -336,7 +459,7 @@ export default function LandingPage() {
             <SectionTitle eyebrow="Ofertas" title="Promociones de Esta Semana" />
 
             <div ref={promosRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
-              {promos.slice(0, 3).map((promo) => (
+              {promos.map((promo) => (
                 <div
                   key={promo.id}
                   className="promo-card"
