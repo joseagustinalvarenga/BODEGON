@@ -17,7 +17,7 @@ const heroSlides = [
 ];
 
 const imageCards = [
-  { image: '/images/card_menu.png',     label: 'Nuestro Menú',       href: '#how-it-works' },
+  { image: '/images/card_menu.png',     label: 'Nuestro Menú',       href: '/menu' },
   { image: '/images/card_location.png', label: 'Encontrá tu Club',   href: '#promos' },
   { image: '/images/card_rewards.png',  label: 'Tus Recompensas',    href: '/register' },
 ];
@@ -227,6 +227,7 @@ export default function LandingPage() {
           <img src="/image.png" alt="el Bodegón" className="landing-logo" style={{ height: 64, width: 'auto', display: 'block', borderRadius: 6 }} />
         </Link>
         <nav className="landing-nav" style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+          <Link href="/menu" style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Nuestro Menú</Link>
           <a href="#how-it-works" style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Cómo funciona</a>
           <a href="#rewards" style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Beneficios y Canjes</a>
           <a href="#promos" style={{ color: 'var(--text-secondary)', fontSize: 14 }}>Promociones</a>
